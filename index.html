@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XE Software — Agência de Software do Piauí</title>
+  <meta name="description" content="A tecnologia que transforma negócios. Sites, sistemas, e-commerce e SEO feitos pela XE Software, agência de software do Piauí." />
+  <meta name="theme-color" content="#090909" />
+  <link rel="icon" href="assets/icons/logo-xe.svg" type="image/svg+xml" />
+  <script>document.documentElement.classList.add("js");</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;700&family=Inter:wght@400;500&family=Unbounded:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="#top" class="header__logo" aria-label="XE Software — início">
+        <img src="assets/icons/logo-xe.svg" alt="XE Software" width="60" height="31" />
+      </a>
+
+      <nav class="nav" aria-label="Principal">
+        <a href="#servicos" class="nav__link"><span class="roll" data-text="Serviços">Serviços</span></a>
+        <a href="#projetos" class="nav__link"><span class="roll" data-text="Projetos">Projetos</span></a>
+        <a href="#contato" class="nav__link"><span class="roll" data-text="Contato">Contato</span></a>
+      </nav>
+
+      <div class="header__cta">
+        <a href="#contato" class="btn btn--ghost"><span class="roll" data-text="Começar projeto">Começar projeto</span></a>
+      </div>
+
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav class="mobile-menu__nav" aria-label="Menu mobile">
+      <a href="#servicos">Serviços</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a href="#contato" class="btn btn--primary">Começar projeto</a>
+  </div>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="hero__badge" data-hero>
+          <span class="hero__badge-num">#1</span>
+          <span>Agência de software do piauí</span>
+        </p>
+
+        <h1 class="hero__title">
+          <span class="hero__line">
+            <span class="word"><span>A</span></span>
+            <span class="word"><span>Tecnologia</span></span>
+            <span class="word"><span>Que</span></span>
+            <span class="hero__icon hero__icon--desktop" aria-hidden="true"><img src="assets/icons/megaphone.svg" alt="" width="73" height="73" /></span>
+          </span>
+          <span class="hero__line hero__line--second">
+            <span class="word"><span>Transforma</span></span>
+            <span class="hero__icon hero__icon--mobile" aria-hidden="true"><img src="assets/icons/megaphone.svg" alt="" width="73" height="73" /></span>
+            <span class="hero__highlight"><span class="hero__highlight-text">Negócios</span></span>
+          </span>
+        </h1>
+
+        <p class="hero__text" data-hero>
+          Acreditamos em unir tecnologia, design e estratégia para transformar ideias em experiências digitais que geram valor para o seu negócio.
+        </p>
+
+        <div class="hero__actions" data-hero>
+          <a href="#contato" class="btn btn--primary"><span class="roll" data-text="Começar projeto">Começar projeto</span></a>
+
+          <div class="proof">
+            <div class="proof__avatars">
+              <img src="assets/img/avatar-1.jpg" alt="" width="40" height="40" />
+              <img src="assets/img/avatar-2.jpg" alt="" width="40" height="40" />
+              <img src="assets/img/avatar-3.jpg" alt="" width="40" height="40" />
+              <img src="assets/img/avatar-4.jpg" alt="" width="40" height="40" />
+              <img src="assets/img/avatar-5.jpg" alt="" width="40" height="40" />
+            </div>
+            <div class="proof__rating">
+              <div class="proof__stars" aria-label="5 estrelas">
+                <span><img src="assets/icons/star.svg" alt="" width="11" height="11" /></span>
+                <span><img src="assets/icons/star.svg" alt="" width="11" height="11" /></span>
+                <span><img src="assets/icons/star.svg" alt="" width="11" height="11" /></span>
+                <span><img src="assets/icons/star.svg" alt="" width="11" height="11" /></span>
+                <span><img src="assets/icons/star.svg" alt="" width="11" height="11" /></span>
+              </div>
+              <p class="proof__label">+200 avaliações<span class="hide-mobile"> 5 estrelas</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Serviços -->
+    <section class="section services" id="servicos">
+      <div class="container">
+        <div class="services__head">
+          <div class="section-head section-head--left" data-reveal>
+            <span class="tag">Serviços</span>
+            <h2 class="h2">O que estamos oferecendo</h2>
+          </div>
+          <a href="#contato" class="btn btn--primary btn--outline-ring" data-reveal><span class="roll" data-text="Começar projeto">Começar projeto</span></a>
+        </div>
+
+        <div class="services__grid">
+          <a href="#contato" class="service-card" data-reveal>
+            <div class="service-card__top">
+              <span class="service-card__icon"><img src="assets/icons/seo.svg" alt="" width="27" height="27" /></span>
+              <h3 class="h3">SEO</h3>
+            </div>
+            <p class="service-card__text">Otimizamos a estrutura, o conteúdo e as palavras-chave do seu site para alcançar posições mais altas nas páginas de resultados dos motores de busca, aumentando suas chances de ser encontrado por clientes em potencial.</p>
+            <span class="more">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+          </a>
+
+          <a href="#contato" class="service-card" data-reveal>
+            <div class="service-card__top">
+              <span class="service-card__icon"><img src="assets/icons/sistemas.svg" alt="" width="29" height="25" /></span>
+              <h3 class="h3">Sistemas</h3>
+            </div>
+            <p class="service-card__text">Desenvolvemos a estrutura, as funcionalidades e a experiência do seu sistema para otimizar processos, centralizar informações, facilitar o uso e tornar as operações do seu negócio mais ágeis, organizadas e eficientes.</p>
+            <span class="more">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+          </a>
+
+          <a href="#contato" class="service-card" data-reveal>
+            <div class="service-card__top">
+              <span class="service-card__icon"><img src="assets/icons/websites.svg" alt="" width="29" height="25" /></span>
+              <h3 class="h3">Websites</h3>
+            </div>
+            <p class="service-card__text">Nossos especialistas em design criam sites visualmente impressionantes e fáceis de usar, otimizados para desempenho e conversão, garantindo uma experiência online fluida para seus visitantes.</p>
+            <span class="more">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+          </a>
+
+          <a href="#contato" class="service-card" data-reveal>
+            <div class="service-card__top">
+              <span class="service-card__icon"><img src="assets/icons/ecommerce.svg" alt="" width="36" height="36" /></span>
+              <h3 class="h3">E-commerce</h3>
+            </div>
+            <p class="service-card__text">Criamos e-commerces para empresas que querem levar suas vendas para o digital, apresentar seus produtos de forma profissional e oferecer aos clientes uma experiência de compra simples, segura e eficiente.</p>
+            <span class="more">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projetos -->
+    <section class="section projects" id="projetos">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="tag">Works</span>
+          <h2 class="h2">Projetos Selecionados</h2>
+        </div>
+
+        <div class="projects__grid">
+          <div class="projects__col">
+            <article class="project" data-reveal>
+              <div class="project__media"><div class="project__img"></div></div>
+              <div class="project__info">
+                <span class="tag">Website</span>
+                <h3 class="h3">Layla - Advogada Previdenciária</h3>
+                <p class="project__text">A landing page foi criada para apresentar os serviços da advogada de forma clara e profissional, fortalecendo sua presença digital e facilitando o contato com novos clientes.</p>
+                <span class="more more--mobile">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+              </div>
+            </article>
+            <article class="project" data-reveal>
+              <div class="project__media"><div class="project__img"></div></div>
+              <div class="project__info">
+                <span class="tag">Jogo</span>
+                <h3 class="h3">Eco City</h3>
+                <p class="project__text">O jogo foi desenvolvido para ensinar sustentabilidade de forma interativa, incentivando crianças a tomar decisões e compreender o impacto de suas escolhas no ambiente.</p>
+                <span class="more more--mobile">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+              </div>
+            </article>
+          </div>
+          <div class="projects__col projects__col--offset">
+            <article class="project" data-reveal>
+              <div class="project__media"><div class="project__img"></div></div>
+              <div class="project__info">
+                <span class="tag">Sistema</span>
+                <h3 class="h3">Agendamento de Barbearia</h3>
+                <p class="project__text">O sistema foi desenvolvido para facilitar o agendamento de serviços da barbearia, permitindo que clientes escolham o serviço, profissional e horário de forma rápida e prática.</p>
+                <span class="more more--mobile">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+              </div>
+            </article>
+            <article class="project" data-reveal>
+              <div class="project__media"><div class="project__img"></div></div>
+              <div class="project__info">
+                <span class="tag">Website</span>
+                <h3 class="h3">Nome - Profissão/Especialidade</h3>
+                <p class="project__text">Descrição do que foi construído e o impacto que gerou</p>
+                <span class="more more--mobile">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="center" data-reveal>
+          <a href="#projetos" class="btn btn--primary btn--regular btn--outline-ring"><span class="roll" data-text="Ver todos os projetos">Ver todos os projetos</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq" id="faq">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="tag">Perguntas Frequentes</span>
+          <h2 class="h2 faq__title">Tem dúvidas?<br />Temos respostas!</h2>
+        </div>
+
+        <div class="faq__list">
+          <details class="faq__item" data-reveal>
+            <summary><span>O que é SEO e por que é importante?</span><span class="faq__toggle"><img src="assets/icons/chevron-down.svg" alt="" width="10" height="5" /></span></summary>
+            <div class="faq__answer"><p>SEO (Search Engine Optimization) é o conjunto de técnicas que faz o seu site aparecer melhor posicionado no Google. Quanto mais bem posicionado, mais pessoas encontram o seu negócio sem que você precise pagar por anúncios.</p></div>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary><span>Vocês desenvolvem landing pages para campanhas e anúncios?</span><span class="faq__toggle"><img src="assets/icons/chevron-down.svg" alt="" width="10" height="5" /></span></summary>
+            <div class="faq__answer"><p>Sim! Criamos landing pages focadas em conversão, rápidas e otimizadas para campanhas no Google Ads, Meta Ads e outras plataformas.</p></div>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary><span>Quanto custa criar um site ou sistema?</span><span class="faq__toggle"><img src="assets/icons/chevron-down.svg" alt="" width="10" height="5" /></span></summary>
+            <div class="faq__answer"><p>O valor depende do escopo, das funcionalidades e do prazo de cada projeto. Conversamos sobre as suas necessidades e enviamos uma proposta personalizada, sem compromisso.</p></div>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary><span>Como posso solicitar um orçamento?</span><span class="faq__toggle"><img src="assets/icons/chevron-down.svg" alt="" width="10" height="5" /></span></summary>
+            <div class="faq__answer"><p>É só preencher o formulário no final desta página ou falar com a gente pelo WhatsApp. Respondemos o mais rápido possível.</p></div>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary><span>Como funciona o processo de criação de um projeto?</span><span class="faq__toggle"><img src="assets/icons/chevron-down.svg" alt="" width="10" height="5" /></span></summary>
+            <div class="faq__answer"><p>Começamos entendendo o seu negócio e os seus objetivos. Depois vêm o planejamento, o design, o desenvolvimento, os testes e, por fim, a publicação. Você acompanha e aprova cada etapa.</p></div>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary><span>Preciso já ter textos e imagens para começar?</span><span class="faq__toggle"><img src="assets/icons/chevron-down.svg" alt="" width="10" height="5" /></span></summary>
+            <div class="faq__answer"><p>Não é obrigatório. Podemos ajudar na organização do conteúdo, na escrita dos textos e na escolha das imagens para o seu projeto.</p></div>
+          </details>
+          <details class="faq__item" data-reveal>
+            <summary><span>A XE Software oferece suporte após a entrega?</span><span class="faq__toggle"><img src="assets/icons/chevron-down.svg" alt="" width="10" height="5" /></span></summary>
+            <div class="faq__answer"><p>Sim. Oferecemos suporte e manutenção após a entrega para garantir que tudo continue funcionando bem e evoluindo junto com o seu negócio.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer / Contato -->
+  <footer class="footer" id="contato">
+    <div class="container">
+      <div class="contact">
+        <p class="talk" aria-label="Let's Talk!">
+          <span class="talk__line"><span>Let's</span></span>
+          <span class="talk__line talk__line--accent"><span>Talk!</span></span>
+        </p>
+
+        <form class="form" id="contact-form" data-reveal novalidate>
+          <label class="field">
+            <span class="field__label">Nome</span>
+            <input type="text" name="nome" placeholder="Ana Clara" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span class="field__label">Número do WhatsApp</span>
+            <input type="tel" name="whatsapp" placeholder="(86) 99999-9999" autocomplete="tel" inputmode="tel" required />
+          </label>
+          <label class="field">
+            <span class="field__label">Serviço</span>
+            <textarea name="servico" placeholder="Escolha seu serviço" rows="4"></textarea>
+          </label>
+          <button type="submit" class="form__submit"><span class="roll" data-text="Enviar">Enviar</span></button>
+          <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="info" data-reveal>
+        <div class="info__contacts">
+          <a href="mailto:xesoftware@gmail.com" class="info__card">
+            <img src="assets/icons/mail.svg" alt="" width="24" height="19" class="info__icon" />
+            <span>xesoftware@gmail.com</span>
+          </a>
+          <a href="tel:+5586999999999" class="info__card">
+            <img src="assets/icons/phone.svg" alt="" width="23" height="23" class="info__icon" />
+            <span>(86) 99999-9999</span>
+          </a>
+        </div>
+        <div class="info__menus">
+          <nav class="info__menu" aria-label="Menu do rodapé">
+            <p class="info__title">Menu</p>
+            <a href="#top" class="is-active">Home</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#projetos">Projetos</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contato">Contato</a>
+          </nav>
+          <nav class="info__menu" aria-label="Serviços">
+            <p class="info__title">Serviços</p>
+            <a href="#servicos">SEO</a>
+            <a href="#servicos">Sistemas</a>
+            <a href="#servicos">Websites</a>
+            <a href="#servicos">E-commerce</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="social" data-reveal>
+        <p class="info__title">Siga-nos:</p>
+        <a href="#" class="social__link" aria-label="Instagram da XE Software">
+          <img src="assets/icons/instagram.svg" alt="" width="20" height="20" />
+        </a>
+      </div>
+
+      <div class="copyright">
+        <p>©Feito por <strong>xe.software</strong></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
