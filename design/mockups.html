@@ -97,7 +97,10 @@
   .law-visual { position: relative; height: 620px; }
   .law-arch { position: absolute; right: 0; top: 0; width: 420px; height: 600px; border-radius: 220px 220px 28px 28px; overflow: hidden;
     background: linear-gradient(170deg, #2b3550, #172036 60%, #10172a); box-shadow: 0 0 0 1px rgba(243,236,226,.08) inset; }
-  .law-card { position: absolute; background: rgba(243,236,226,.96); color: #121826; border-radius: 18px; padding: 16px 18px; box-shadow: 0 20px 40px rgba(0,0,0,.35); }
+  .law-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; filter: saturate(.9) contrast(1.04); }
+  .law-arch::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,21,36,0) 55%, rgba(15,21,36,.85)), linear-gradient(90deg, rgba(200,164,106,.10), rgba(15,21,36,0) 40%); }
+  .law-arch { box-shadow: 0 0 0 1px rgba(200,164,106,.35) inset, 0 30px 60px rgba(0,0,0,.35) !important; }
+  .law-card { position: absolute; z-index: 2; background: rgba(243,236,226,.96); color: #121826; border-radius: 18px; padding: 16px 18px; box-shadow: 0 20px 40px rgba(0,0,0,.35); }
   .law-card .t { font-size: 14px; font-weight: 600; }
   .law-card .s { font-size: 12px; color: #6b6f7a; margin-top: 2px; }
 
@@ -108,7 +111,7 @@
   .law-m .burger { width: 22px; height: 12px; border-top: 2px solid #f3ece2; border-bottom: 2px solid #f3ece2; }
   .law-m h1 { font-size: 40px; letter-spacing: -1.2px; margin: 22px 0 14px; }
   .law-m p.lead { font-size: 14px; }
-  .law-m .law-arch { position: relative; width: 100%; height: 330px; margin-top: 26px; border-radius: 170px 170px 24px 24px; }
+  .law-m .law-arch { position: relative; width: 100%; height: 360px; margin-top: 26px; border-radius: 170px 170px 24px 24px; }
 
   /* =====================================================
      SCENE 2 — E-commerce (pet shop)
@@ -127,12 +130,18 @@
   .banner h2 { font-family: "Unbounded"; font-weight: 500; font-size: 32px; line-height: 1.12; letter-spacing: -1.2px; max-width: 400px; }
   .banner p { font-size: 14px; color: #6b5f55; margin-top: 12px; }
   .banner .btn { display: inline-block; margin-top: 22px; padding: 12px 22px; border-radius: 99px; background: #1d1a17; color: #fff; font-size: 13px; font-weight: 600; }
+  .banner--photo { color: #fff; }
+  .banner--photo h2, .banner--photo p, .banner--photo .btn, .banner__kicker { position: relative; }
+  .banner__shade { position: absolute; inset: 0; background: linear-gradient(90deg, #33435f 0%, rgba(51,67,95,.92) 34%, rgba(51,67,95,0) 62%); }
+  .banner--photo p { color: rgba(255,255,255,.75); }
+  .banner--photo .btn { background: #fff; color: #1d1a17; }
+  .banner__kicker { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; color: #ffb38f; margin-bottom: 10px; }
   .shop-sec { display: flex; justify-content: space-between; align-items: baseline; padding: 30px 48px 16px; }
   .shop-sec h3 { font-family: "Unbounded"; font-weight: 500; font-size: 20px; letter-spacing: -.6px; }
   .shop-sec span { font-size: 13px; color: #8d857c; }
   .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; padding: 0 48px; }
   .prod { background: #fff; border-radius: 22px; padding: 12px; box-shadow: 0 1px 0 #efe6db; }
-  .prod .img { height: 150px; border-radius: 16px; display: grid; place-items: center; position: relative; }
+  .prod .img { height: 150px; overflow: hidden; border-radius: 16px; display: grid; place-items: center; position: relative; }
   .prod .tag { position: absolute; top: 10px; left: 10px; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 99px; background: #1d1a17; color: #fff; }
   .prod .nm { font-size: 14px; font-weight: 600; margin: 12px 4px 4px; }
   .prod .rt { font-size: 11px; color: #a1978d; margin: 0 4px; }
@@ -246,29 +255,7 @@
             </div>
             <div class="law-visual">
               <div class="law-arch">
-                <svg viewBox="0 0 420 600" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-                  <defs>
-                    <radialGradient id="halo" cx=".5" cy=".42" r=".55"><stop offset="0" stop-color="#c8a46a" stop-opacity=".32"/><stop offset="1" stop-color="#c8a46a" stop-opacity="0"/></radialGradient>
-                    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ecd3a2"/><stop offset=".5" stop-color="#c8a46a"/><stop offset="1" stop-color="#8e6a35"/></linearGradient>
-                  </defs>
-                  <rect width="420" height="600" fill="url(#halo)"/>
-                  <g stroke="rgba(243,236,226,.06)" stroke-width="1">
-                    <line x1="60" y1="120" x2="60" y2="600"/><line x1="110" y1="80" x2="110" y2="600"/><line x1="310" y1="80" x2="310" y2="600"/><line x1="360" y1="120" x2="360" y2="600"/>
-                  </g>
-                  <g fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="210" cy="150" r="13"/>
-                    <path d="M210 163v300"/>
-                    <path d="M110 205h200"/>
-                    <path d="M210 205c-20-10-40-14-60-14M210 205c20-10 40-14 60-14" stroke-width="3"/>
-                    <path d="M118 205l-46 110M118 205l46 110"/>
-                    <path d="M302 205l-46 110M302 205l46 110"/>
-                    <path d="M66 315a52 22 0 0 0 104 0z" fill="rgba(200,164,106,.18)"/>
-                    <path d="M250 315a52 22 0 0 0 104 0z" fill="rgba(200,164,106,.18)"/>
-                    <path d="M150 470h120M130 500h160"/>
-                    <path d="M170 463c10-24 70-24 80 0"/>
-                  </g>
-                  <circle cx="110" cy="205" r="7" fill="#ecd3a2"/><circle cx="310" cy="205" r="7" fill="#ecd3a2"/>
-                </svg>
+                <img class="law-photo" src="photos/lawyer.jpg" alt="" />
               </div>
               <div class="law-card" style="left:-20px;top:40px;width:250px">
                 <div class="f-row"><div class="f-ico" style="background:#e9f5ee;width:36px;height:36px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17803d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
@@ -297,29 +284,7 @@
           <p class="lead">Aposentadorias, BPC/LOAS e revisões do INSS com atendimento humanizado.</p>
           <div class="law-ctas" style="margin-top:22px"><div class="law-btn" style="flex:1;text-align:center">Quero meu direito →</div></div>
           <div class="law-arch" style="position:relative;right:auto">
-            <svg viewBox="0 0 420 600" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-                  <defs>
-                    <radialGradient id="halo" cx=".5" cy=".42" r=".55"><stop offset="0" stop-color="#c8a46a" stop-opacity=".32"/><stop offset="1" stop-color="#c8a46a" stop-opacity="0"/></radialGradient>
-                    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ecd3a2"/><stop offset=".5" stop-color="#c8a46a"/><stop offset="1" stop-color="#8e6a35"/></linearGradient>
-                  </defs>
-                  <rect width="420" height="600" fill="url(#halo)"/>
-                  <g stroke="rgba(243,236,226,.06)" stroke-width="1">
-                    <line x1="60" y1="120" x2="60" y2="600"/><line x1="110" y1="80" x2="110" y2="600"/><line x1="310" y1="80" x2="310" y2="600"/><line x1="360" y1="120" x2="360" y2="600"/>
-                  </g>
-                  <g fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="210" cy="150" r="13"/>
-                    <path d="M210 163v300"/>
-                    <path d="M110 205h200"/>
-                    <path d="M210 205c-20-10-40-14-60-14M210 205c20-10 40-14 60-14" stroke-width="3"/>
-                    <path d="M118 205l-46 110M118 205l46 110"/>
-                    <path d="M302 205l-46 110M302 205l46 110"/>
-                    <path d="M66 315a52 22 0 0 0 104 0z" fill="rgba(200,164,106,.18)"/>
-                    <path d="M250 315a52 22 0 0 0 104 0z" fill="rgba(200,164,106,.18)"/>
-                    <path d="M150 470h120M130 500h160"/>
-                    <path d="M170 463c10-24 70-24 80 0"/>
-                  </g>
-                  <circle cx="110" cy="205" r="7" fill="#ecd3a2"/><circle cx="310" cy="205" r="7" fill="#ecd3a2"/>
-                </svg>
+                <img class="law-photo" src="photos/lawyer.jpg" alt="" />
           </div>
         </div>
       </div>
@@ -356,45 +321,29 @@
               <div class="shop-cart"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1.2 11.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><b>3</b></div>
             </div>
             <div class="shop-hero">
-              <div class="banner" style="background:linear-gradient(120deg,#ffd9c4,#ffe9dc)">
+              <div class="banner banner--photo" style="background:#3b4d6e url(photos/dog-golden.jpg) 78% 38% / 68% auto no-repeat">
+                <div class="banner__shade"></div>
+                <span class="banner__kicker">NOVA COLEÇÃO · OUTONO</span>
                 <h2>Tudo para quem você ama de quatro patas.</h2>
                 <p>Mais de 2.000 produtos com entrega rápida.</p>
                 <span class="btn">Comprar agora →</span>
-                <svg style="position:absolute;right:30px;bottom:-10px" width="290" height="250" viewBox="0 0 290 250">
-                  <circle cx="160" cy="140" r="110" fill="#ffb38f" opacity=".55"/>
-                  <!-- dog -->
-                  <ellipse cx="165" cy="215" rx="88" ry="60" fill="#e08a4f"/>
-                  <path d="M95 92c-26 4-38 40-30 70 10-6 24-26 30-70z" fill="#8a4a24"/>
-                  <path d="M235 92c26 4 38 40 30 70-10-6-24-26-30-70z" fill="#8a4a24"/>
-                  <ellipse cx="165" cy="128" rx="74" ry="70" fill="#f0a266"/>
-                  <ellipse cx="165" cy="160" rx="40" ry="30" fill="#ffe2c9"/>
-                  <circle cx="137" cy="118" r="8" fill="#2b1a10"/><circle cx="193" cy="118" r="8" fill="#2b1a10"/>
-                  <circle cx="139" cy="115" r="2.5" fill="#fff"/><circle cx="195" cy="115" r="2.5" fill="#fff"/>
-                  <ellipse cx="165" cy="146" rx="13" ry="9" fill="#2b1a10"/>
-                  <path d="M152 166q13 12 26 0" stroke="#2b1a10" stroke-width="4" fill="none" stroke-linecap="round"/>
-                  <rect x="112" y="186" width="106" height="16" rx="8" fill="#1d1a17"/><circle cx="165" cy="206" r="9" fill="#ffc94a"/>
-                </svg>
               </div>
-              <div class="banner" style="background:linear-gradient(140deg,#d8efe1,#ecf8f0)">
-                <span style="font-size:11px;font-weight:700;letter-spacing:1px;color:#2f7a52">OFERTA DA SEMANA</span>
-                <h2 style="font-size:26px;margin-top:10px">Rações premium até 30% off</h2>
-                <span class="btn" style="background:#2f7a52">Ver ofertas</span>
+              <div class="banner banner--photo" style="background:linear-gradient(90deg,#fdd835 38%,rgba(253,216,53,0) 62%),#fdd835 url(photos/dog-yellow.jpg) 118% 64% / 70% auto no-repeat">
+                <span style="position:relative;font-size:11px;font-weight:700;letter-spacing:1px;color:#5a4300">OFERTA DA SEMANA</span>
+                <h2 style="position:relative;font-size:24px;margin-top:10px;max-width:190px;color:#1d1a17">Banho &amp; tosa com 30% off</h2>
+                <span class="btn" style="position:relative">Agendar</span>
               </div>
             </div>
             <div class="shop-sec"><h3>Mais vendidos</h3><span>Ver todos →</span></div>
             <div class="grid4">
-              <div class="prod"><div class="img" style="background:#fff1e8"><span class="tag">-20%</span>
-                <svg width="90" height="120" viewBox="0 0 90 120"><path d="M14 18h62l8 92a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6z" fill="#ff6b35"/><path d="M14 18h62l-4-12H18z" fill="#d9542a"/><rect x="18" y="44" width="54" height="40" rx="8" fill="#fff"/><text x="45" y="62" text-anchor="middle" font-family="Unbounded" font-size="9" fill="#1d1a17">PREMIUM</text><text x="45" y="76" text-anchor="middle" font-family="Inter" font-size="8" fill="#8d857c">adulto · 10kg</text></svg></div>
-                <div class="nm">Ração Premium Adulto 10kg</div><div class="rt">★★★★★ (482)</div><div class="pr"><b>R$ 189,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
-              <div class="prod"><div class="img" style="background:#eef3ff">
-                <svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="40" fill="#4f7cff"/><path d="M20 40c20 10 50 10 70 0M20 70c20-10 50-10 70 0" stroke="#fff" stroke-width="6" fill="none" opacity=".9"/><circle cx="42" cy="38" r="8" fill="#fff" opacity=".35"/></svg></div>
-                <div class="nm">Bola Interativa Mordedor</div><div class="rt">★★★★★ (219)</div><div class="pr"><b>R$ 39,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
-              <div class="prod"><div class="img" style="background:#f3efff"><span class="tag" style="background:#8d1cff">NOVO</span>
-                <svg width="120" height="90" viewBox="0 0 120 90"><ellipse cx="60" cy="56" rx="54" ry="28" fill="#7a5cff"/><ellipse cx="60" cy="50" rx="40" ry="18" fill="#cbbcff"/><ellipse cx="60" cy="48" rx="30" ry="11" fill="#e8e0ff"/></svg></div>
-                <div class="nm">Caminha Nuvem Antiestresse</div><div class="rt">★★★★☆ (98)</div><div class="pr"><b>R$ 149,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
-              <div class="prod"><div class="img" style="background:#fff7df">
-                <svg width="120" height="100" viewBox="0 0 120 100"><ellipse cx="60" cy="50" rx="44" ry="30" fill="none" stroke="#ffb400" stroke-width="12"/><rect x="48" y="70" width="24" height="16" rx="4" fill="#9a6b00"/><circle cx="60" cy="92" r="7" fill="#ffd36b"/></svg></div>
-                <div class="nm">Coleira Ajustável Couro</div><div class="rt">★★★★★ (305)</div><div class="pr"><b>R$ 59,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
+              <div class="prod"><div class="img" style="background:#fff1e8 url(photos/prod-food.jpg) 50% 60% / cover no-repeat"><span class="tag">-20%</span></div>
+                <div class="nm">Ração Natural Grain Free 10kg</div><div class="rt">★★★★★ (482)</div><div class="pr"><b>R$ 189,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
+              <div class="prod"><div class="img" style="background:#eef3ff url(photos/prod-ball.jpg) 50% 50% / cover no-repeat"></div>
+                <div class="nm">Bola Maciça Ultra Resistente</div><div class="rt">★★★★★ (219)</div><div class="pr"><b>R$ 39,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
+              <div class="prod"><div class="img" style="background:#f3efff url(photos/prod-bed.jpg) 50% 55% / cover no-repeat"><span class="tag" style="background:#8d1cff">NOVO</span></div>
+                <div class="nm">Cama Ninho com Cobertor</div><div class="rt">★★★★☆ (98)</div><div class="pr"><b>R$ 149,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
+              <div class="prod"><div class="img" style="background:#fff7df url(photos/prod-collar.jpg) 50% 45% / cover no-repeat"></div>
+                <div class="nm">Coleira de Couro Legítimo</div><div class="rt">★★★★★ (305)</div><div class="pr"><b>R$ 59,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
             </div>
           </div>
         </div>

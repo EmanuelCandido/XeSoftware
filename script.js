@@ -290,18 +290,9 @@
     const tabs = items.map((it) => it.querySelector(".svc__tab"));
     const frame = svc.querySelector(".svc__frame");
     const slides = [...svc.querySelectorAll(".svc__slide")];
-    const counter = svc.querySelector(".svc__counter-cur");
-    const AUTOPLAY_MS = 7000;
     const isStacked = () => window.matchMedia("(max-width: 900px)").matches;
     let current = 0;
-    let timer = null;
-    let started = 0;
-    let remaining = AUTOPLAY_MS;
-    let hovering = false;
-    let inView = false;
-    let userLocked = false;
-
-    svc.style.setProperty("--svc-dur", `${AUTOPLAY_MS}ms`);
+    let leavingTimer = null;
 
     const show = (index) => {
       if (index === current) return;
@@ -313,73 +304,23 @@
         t.setAttribute("aria-selected", String(i === index));
         t.tabIndex = i === index ? 0 : -1;
       });
-      if (counter) counter.textContent = String(index + 1).padStart(2, "0");
 
-      // Direction-aware wipe: the incoming slide must start hidden on the correct side
-      const next = slides[index];
-      frame.classList.add("no-anim");
-      frame.dataset.dir = index > prev ? "down" : "up";
-      slides.forEach((s, i) => {
-        s.classList.remove("is-leaving");
-        if (i !== index && i !== prev) s.classList.remove("is-active");
-      });
-      next.classList.remove("is-active");
-      void next.offsetWidth;
-      frame.classList.remove("no-anim");
+      // Full-image crossfade: the old slide softly blurs out while the new one fades in on top
+      clearTimeout(leavingTimer);
+      slides.forEach((s, i) => s.classList.toggle("is-leaving", i === prev));
       slides[prev].classList.remove("is-active");
-      slides[prev].classList.add("is-leaving");
-      next.classList.add("is-active");
-
-      restartProgress();
+      slides[index].classList.add("is-active");
+      leavingTimer = setTimeout(() => slides[prev].classList.remove("is-leaving"), 900);
     };
 
-    // Autoplay with a progress line; pauses on hover, off-screen or hidden tab
-    const restartProgress = () => {
-      const line = items[current].querySelector(".svc__line i");
-      line.style.animation = "none";
-      void line.offsetWidth;
-      line.style.animation = "";
-      remaining = AUTOPLAY_MS;
-      schedule();
-    };
-
-    const canPlay = () => !reduceMotion && !userLocked && inView && !hovering && !document.hidden && !isStacked();
-
-    const schedule = () => {
-      clearTimeout(timer);
-      const playing = canPlay();
-      svc.classList.toggle("is-autoplay", !reduceMotion && !userLocked && !isStacked());
-      svc.classList.toggle("is-paused", !playing);
-      if (!playing) return;
-      started = performance.now();
-      timer = setTimeout(() => show((current + 1) % items.length), remaining);
-    };
-
-    const pause = () => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-        remaining = Math.max(400, remaining - (performance.now() - started));
-      }
-      svc.classList.add("is-paused");
-    };
-
-    const lock = () => {
-      userLocked = true;
-      clearTimeout(timer);
-      svc.classList.remove("is-autoplay", "is-paused");
-    };
-
-    selectService = (index, { userAction = true } = {}) => {
-      if (userAction) lock();
-      if (index === current && isStacked() && userAction) return;
+    selectService = (index) => {
+      if (index === current && isStacked()) return;
       show(index);
     };
 
     tabs.forEach((tab, i) => {
       tab.addEventListener("click", () => selectService(i));
       tab.addEventListener("pointerenter", (e) => {
-        // Hover previews without stopping autoplay (it resumes when the pointer leaves)
         if (e.pointerType === "mouse" && !isStacked()) show(i);
       });
       tab.addEventListener("keydown", (e) => {
@@ -394,27 +335,6 @@
         tabs[to].focus();
       });
     });
-
-    svc.addEventListener("pointerenter", () => {
-      hovering = true;
-      pause();
-    });
-    svc.addEventListener("pointerleave", () => {
-      hovering = false;
-      schedule();
-    });
-    document.addEventListener("visibilitychange", () => (document.hidden ? pause() : schedule()));
-    window.addEventListener("resize", schedule);
-
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(
-        ([entry]) => {
-          inView = entry.isIntersecting;
-          inView ? schedule() : pause();
-        },
-        { threshold: 0.35 }
-      ).observe(svc);
-    }
 
     // Subtle 3D tilt on the stage
     const stage = svc.querySelector(".svc__stage");
@@ -438,8 +358,6 @@
     svc.querySelectorAll("[data-details]").forEach((btn) => {
       btn.addEventListener("click", () => openDrawer(btn.dataset.details, btn));
     });
-
-    schedule();
   }
 
   // Footer links open the matching service

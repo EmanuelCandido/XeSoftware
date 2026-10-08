@@ -835,21 +835,6 @@ body.menu-open {
   transform: scaleX(1);
 }
 
-/* Autoplay: the active line fills over the cycle duration */
-.svc.is-autoplay .svc__item.is-active .svc__line i {
-  transform: scaleX(0);
-  transition: none;
-  animation: svc-progress var(--svc-dur, 7s) linear forwards;
-}
-
-.svc.is-paused .svc__item.is-active .svc__line i {
-  animation-play-state: paused;
-}
-
-@keyframes svc-progress {
-  to { transform: scaleX(1); }
-}
-
 .svc__body {
   display: grid;
   grid-template-rows: 0fr;
@@ -975,45 +960,36 @@ body.menu-open {
 .svc__slide {
   position: absolute;
   inset: 0;
-  clip-path: inset(100% 0 0 0);
   z-index: 1;
-}
-
-.svc__frame[data-dir="up"] .svc__slide {
-  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.9s var(--ease-out), visibility 0s linear 0.9s;
 }
 
 .svc__slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.28);
-  transition: transform 1.4s var(--ease-out), filter 1s var(--ease-out);
+  transform: scale(1.16);
+  filter: blur(14px) saturate(1.2);
+  transition: transform 1.3s var(--ease-out), filter 0.9s var(--ease-out);
 }
 
-.svc__frame .svc__slide.is-active {
+.svc__slide.is-active {
   z-index: 2;
-  clip-path: inset(0 0 0 0);
-  transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.9s var(--ease-out), visibility 0s;
 }
 
 .svc__slide.is-active img {
   transform: scale(1.1);
-}
-
-.svc__frame .svc__slide.is-leaving {
-  z-index: 1;
-  clip-path: inset(0 0 0 0);
+  filter: none;
 }
 
 .svc__slide.is-leaving img {
-  transform: scale(1.02);
-  filter: brightness(0.45);
-}
-
-.svc__frame.no-anim .svc__slide,
-.svc__frame.no-anim .svc__slide img {
-  transition: none !important;
+  transform: scale(1.06);
+  filter: blur(8px);
 }
 
 .svc__hud {
@@ -1022,11 +998,10 @@ body.menu-open {
   z-index: 3;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   pointer-events: none;
 }
 
-.svc__counter,
 .svc__hud-btn {
   display: inline-flex;
   align-items: center;
@@ -1041,11 +1016,6 @@ body.menu-open {
   font-family: var(--font-display);
   font-size: 12px;
   color: var(--white-60);
-}
-
-.svc__counter b {
-  font-weight: 400;
-  color: var(--white);
 }
 
 .svc__hud-btn {
