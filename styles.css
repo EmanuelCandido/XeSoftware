@@ -597,67 +597,6 @@ body.menu-open {
   margin-top: 42px;
 }
 
-.proof {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.proof__avatars {
-  display: flex;
-  width: 150px;
-  height: 40px;
-}
-
-.proof__avatars img {
-  width: 40px;
-  height: 40px;
-  margin-right: -10px;
-  border-radius: 12px;
-  object-fit: cover;
-  outline: 2px solid rgba(10, 10, 10, 0.5);
-  transition: transform 0.4s var(--ease-spring);
-}
-
-.proof__avatars img:hover {
-  transform: translateY(-4px) scale(1.08);
-  position: relative;
-  z-index: 1;
-}
-
-.proof__rating {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.proof__stars {
-  display: flex;
-  gap: 2px;
-}
-
-.proof__stars span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 17px;
-  height: 17px;
-  border-radius: 4px;
-  background: var(--white-10);
-}
-
-.proof__stars img {
-  width: 11px;
-  height: 11px;
-}
-
-.proof__label {
-  font-weight: 700;
-  font-size: 11px;
-  line-height: 22px;
-  text-transform: uppercase;
-}
-
 /* ---------- Sections ---------- */
 .section {
   padding: 100px 0;
@@ -1128,7 +1067,7 @@ body.menu-open {
 
 .drawer__inner {
   display: grid;
-  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
   height: 100%;
 }
 
@@ -1136,13 +1075,56 @@ body.menu-open {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 14px;
-  padding: 28px;
+  gap: 22px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 72px 32px 36px;
   border-right: 1px solid var(--white-10);
   background:
     radial-gradient(70% 60% at 50% 45%, rgba(141, 28, 255, 0.22), transparent 70%),
     #0b0a10;
+}
+
+.drawer__media > :first-child {
+  margin-top: auto;
+}
+
+.drawer__media > :last-child {
+  margin-bottom: auto;
+}
+
+.drawer__side {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.drawer__side .drawer__stats {
+  margin-top: 0;
+}
+
+.drawer__side .drawer__stat {
+  padding: 12px;
+}
+
+.drawer__side .drawer__stat b {
+  font-size: 13px;
+}
+
+.drawer__side .drawer__h {
+  margin: 0 0 10px;
+}
+
+.drawer__side .drawer__text p {
+  font-size: 15px;
+}
+
+.drawer__side .drawer__cta {
+  margin-top: 0;
+}
+
+.only-mobile {
+  display: none;
 }
 
 .zoomable {
@@ -1373,6 +1355,22 @@ body.menu-open {
 }
 
 @media (max-width: 900px) {
+  .only-desktop {
+    display: none !important;
+  }
+
+  .only-mobile {
+    display: block;
+  }
+
+  .drawer__info .only-mobile .drawer__stats {
+    margin-top: 24px;
+  }
+
+  .drawer__info .only-mobile .drawer__cta {
+    margin-top: 32px;
+  }
+
   .drawer {
     width: 100vw;
     height: 100dvh;
@@ -1388,8 +1386,14 @@ body.menu-open {
   }
 
   .drawer__media {
+    overflow: visible;
     padding: 72px 16px 8px;
     border-right: 0;
+  }
+
+  .drawer__media > :first-child,
+  .drawer__media > :last-child {
+    margin: 0;
   }
 
   .drawer__info {
@@ -2060,23 +2064,10 @@ body.menu-open {
   transition: opacity 0.6s var(--ease-out) calc(var(--d, 0s) + 0.35s);
 }
 
-.js .proof__avatars img,
-.js .proof__stars span {
-  opacity: 0;
-  transform: scale(0.4) translateY(10px);
-  transition: opacity 0.5s var(--ease-out) var(--d, 0s), transform 0.6s var(--ease-spring) var(--d, 0s);
-}
-
 .js .hero.is-loaded .word > span,
 .js .hero.is-loaded [data-hero],
-.js .hero.is-loaded .hero__icon,
-.js .hero.is-loaded .proof__avatars img,
-.js .hero.is-loaded .proof__stars span {
-  opacity: 1;
-  transform: none;
-}
-
 .js .hero.is-loaded .hero__icon {
+  opacity: 1;
   transform: none;
 }
 
@@ -2086,11 +2077,6 @@ body.menu-open {
 
 .js .hero.is-loaded .hero__highlight-text {
   opacity: 1;
-}
-
-.js .hero.is-loaded .proof__avatars img:hover {
-  transform: translateY(-4px) scale(1.08);
-  transition-delay: 0s;
 }
 
 /* Let's Talk */
@@ -2207,10 +2193,6 @@ body.menu-open {
     font-size: 16px;
   }
 
-  .hide-mobile {
-    display: none;
-  }
-
   /* Hero */
   .hero {
     min-height: 0;
@@ -2282,11 +2264,6 @@ body.menu-open {
   .hero__actions .btn--primary {
     height: 40px;
     padding: 0 20px;
-  }
-
-  .proof__label {
-    font-size: 12px;
-    line-height: 24px;
   }
 
   /* Sections */

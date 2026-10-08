@@ -35,14 +35,6 @@
       target.style.setProperty("--d", `${0.15 + i * 0.09}s`);
     });
 
-    const base = 0.15 + seq.length * 0.09;
-    hero.querySelectorAll(".proof__avatars img").forEach((img, i) => {
-      img.style.setProperty("--d", `${base + 0.1 + i * 0.07}s`);
-    });
-    hero.querySelectorAll(".proof__stars span").forEach((star, i) => {
-      star.style.setProperty("--d", `${base + 0.35 + i * 0.07}s`);
-    });
-
     const start = () => requestAnimationFrame(() => hero.classList.add("is-loaded"));
     const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
     Promise.race([fontsReady, new Promise((r) => setTimeout(r, 1200))]).then(start);
@@ -280,7 +272,7 @@
     },
   };
   const SERVICE_IDS = Object.keys(SERVICES);
-  const IMG_V = "6";
+  const IMG_V = "8";
   const serviceImg = (id, size = "") => `assets/img/services/${id}${size}.webp?v=${IMG_V}`;
   let openLightbox = () => {};
 
@@ -403,23 +395,35 @@
         <button type="button" class="zoomable" data-zoom-drawer="${id}" aria-label="Ampliar imagem">
           <img src="${serviceImg(id)}" alt="${esc(alt)}" width="2000" height="1250" />
 </button>`;
-      content.innerHTML = `
-        <h2 class="drawer__title" id="drawer-title">${esc(s.title)}</h2>
-        <p class="drawer__lead">${esc(s.lead)}</p>
+      const stats = `
         <div class="drawer__stats">
           <div class="drawer__stat"><span>Investimento</span><b>${esc(s.price)}</b></div>
           <div class="drawer__stat"><span>Prazo</span><b>${esc(s.time)}</b></div>
           <div class="drawer__stat"><span>Agenda</span><b>${esc(s.status)}</b></div>
-        </div>
-        <h3 class="drawer__h">Visão geral</h3>
-        <div class="drawer__text">${s.overview.map((p) => `<p>${esc(p)}</p>`).join("")}</div>
+        </div>`;
+      const overview = `
+        <div class="drawer__block">
+          <h3 class="drawer__h">Visão geral</h3>
+          <div class="drawer__text">${s.overview.map((p) => `<p>${esc(p)}</p>`).join("")}</div>
+        </div>`;
+      const cta = `<a href="#contato" class="btn btn--primary drawer__cta" data-cta="${id}">Quero este serviço</a>`;
+
+      // Desktop: cards, overview and CTA sit under the image. Mobile: they follow the title.
+      media.insertAdjacentHTML(
+        "beforeend",
+        `<div class="drawer__side only-desktop">${stats}${overview}${cta}</div>`
+      );
+      content.innerHTML = `
+        <h2 class="drawer__title" id="drawer-title">${esc(s.title)}</h2>
+        <p class="drawer__lead">${esc(s.lead)}</p>
+        <div class="only-mobile">${stats}${overview}</div>
         <h3 class="drawer__h">O que está incluído</h3>
         <ul class="drawer__list">${s.included.map((li) => `<li>${esc(li)}</li>`).join("")}</ul>
         <h3 class="drawer__h">Como trabalhamos</h3>
         <div class="drawer__steps">${s.steps
           .map(([t, p], i) => `<div class="drawer__step"><i>0${i + 1}</i><div><b>${esc(t)}</b><p>${esc(p)}</p></div></div>`)
           .join("")}</div>
-        <a href="#contato" class="btn btn--primary drawer__cta" data-cta="${id}">Quero este serviço</a>
+        <div class="only-mobile">${cta}</div>
         <h3 class="drawer__h">Outros serviços</h3>
         <div class="drawer__others">${SERVICE_IDS.filter((o) => o !== id)
           .map((o) => `<button type="button" class="drawer__other" data-switch="${o}">${esc(SERVICES[o].title)}</button>`)
