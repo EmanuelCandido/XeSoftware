@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;700&family=Inter:wght@400;500&family=Unbounded:wght@300;400;500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
   <!-- Header -->
@@ -114,42 +114,114 @@
           <a href="#contato" class="btn btn--primary btn--outline-ring" data-reveal><span class="roll" data-text="Começar projeto">Começar projeto</span></a>
         </div>
 
-        <div class="services__grid">
-          <a href="#contato" class="service-card" data-reveal>
-            <div class="service-card__top">
-              <span class="service-card__icon"><img src="assets/icons/seo.svg" alt="" width="27" height="27" /></span>
-              <h3 class="h3">SEO</h3>
+        <div class="svc" data-reveal>
+          <div class="svc__list" role="tablist" aria-label="Serviços da XE Software" aria-orientation="vertical">
+            <div class="svc__item is-active" data-service="websites">
+              <button class="svc__tab" type="button" role="tab" id="svc-tab-websites" aria-selected="true" aria-controls="svc-stage" tabindex="0">
+                <span class="svc__num">01.</span>
+                <span class="svc__title">Websites &amp; Landing Pages</span>
+                <span class="svc__arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="svc__line" aria-hidden="true"><i></i></span>
+              </button>
+              <div class="svc__body">
+                <div class="svc__body-inner">
+                  <picture class="svc__mobile-media">
+                    <img src="assets/img/services/websites-sm.webp" alt="Site de advocacia exibido em um iPad e um iPhone" width="1000" height="625" loading="lazy" />
+                  </picture>
+                  <p class="svc__desc">Sites e landing pages rápidos, bonitos e pensados para transformar visitas em contatos e pedidos de orçamento.</p>
+                  <div class="svc__meta">
+                    <span class="svc__chip">A partir de R$ 1.200</span>
+                    <span class="svc__chip">1–2 semanas</span>
+                  </div>
+                  <button class="svc__more" type="button" data-details="websites">Ver detalhes <span aria-hidden="true">→</span></button>
+                </div>
+              </div>
             </div>
-            <p class="service-card__text">Otimizamos a estrutura, o conteúdo e as palavras-chave do seu site para alcançar posições mais altas nas páginas de resultados dos motores de busca, aumentando suas chances de ser encontrado por clientes em potencial.</p>
-            <span class="more">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
-          </a>
+            <div class="svc__item" data-service="ecommerce">
+              <button class="svc__tab" type="button" role="tab" id="svc-tab-ecommerce" aria-selected="false" aria-controls="svc-stage" tabindex="-1">
+                <span class="svc__num">02.</span>
+                <span class="svc__title">E-commerce</span>
+                <span class="svc__arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="svc__line" aria-hidden="true"><i></i></span>
+              </button>
+              <div class="svc__body">
+                <div class="svc__body-inner">
+                  <picture class="svc__mobile-media">
+                    <img src="assets/img/services/ecommerce-sm.webp" alt="Loja virtual de pet shop exibida em um notebook e um celular" width="1000" height="625" loading="lazy" />
+                  </picture>
+                  <p class="svc__desc">Lojas virtuais para vender online com catálogo, carrinho, Pix e cartão — e um painel simples de administrar.</p>
+                  <div class="svc__meta">
+                    <span class="svc__chip">A partir de R$ 3.500</span>
+                    <span class="svc__chip">4–5 semanas</span>
+                  </div>
+                  <button class="svc__more" type="button" data-details="ecommerce">Ver detalhes <span aria-hidden="true">→</span></button>
+                </div>
+              </div>
+            </div>
+            <div class="svc__item" data-service="sistemas">
+              <button class="svc__tab" type="button" role="tab" id="svc-tab-sistemas" aria-selected="false" aria-controls="svc-stage" tabindex="-1">
+                <span class="svc__num">03.</span>
+                <span class="svc__title">Sistemas Sob Medida</span>
+                <span class="svc__arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="svc__line" aria-hidden="true"><i></i></span>
+              </button>
+              <div class="svc__body">
+                <div class="svc__body-inner">
+                  <picture class="svc__mobile-media">
+                    <img src="assets/img/services/sistemas-sm.webp" alt="Painel de gestão de barbearia exibido em um notebook" width="1000" height="625" loading="lazy" />
+                  </picture>
+                  <p class="svc__desc">Sistemas feitos para o jeito como o seu negócio funciona: menos planilhas, mais controle e processos automatizados.</p>
+                  <div class="svc__meta">
+                    <span class="svc__chip">Sob consulta</span>
+                    <span class="svc__chip">4–8 semanas</span>
+                  </div>
+                  <button class="svc__more" type="button" data-details="sistemas">Ver detalhes <span aria-hidden="true">→</span></button>
+                </div>
+              </div>
+            </div>
+            <div class="svc__item" data-service="seo">
+              <button class="svc__tab" type="button" role="tab" id="svc-tab-seo" aria-selected="false" aria-controls="svc-stage" tabindex="-1">
+                <span class="svc__num">04.</span>
+                <span class="svc__title">SEO &amp; Performance</span>
+                <span class="svc__arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="svc__line" aria-hidden="true"><i></i></span>
+              </button>
+              <div class="svc__body">
+                <div class="svc__body-inner">
+                  <picture class="svc__mobile-media">
+                    <img src="assets/img/services/seo-sm.webp" alt="Resultado de busca em primeiro lugar com métricas de crescimento orgânico" width="1000" height="625" loading="lazy" />
+                  </picture>
+                  <p class="svc__desc">Otimizamos estrutura, conteúdo e velocidade do seu site para aparecer no topo do Google e ser encontrado por quem procura você.</p>
+                  <div class="svc__meta">
+                    <span class="svc__chip">Sob consulta</span>
+                    <span class="svc__chip">Plano mensal</span>
+                  </div>
+                  <button class="svc__more" type="button" data-details="seo">Ver detalhes <span aria-hidden="true">→</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <a href="#contato" class="service-card" data-reveal>
-            <div class="service-card__top">
-              <span class="service-card__icon"><img src="assets/icons/sistemas.svg" alt="" width="29" height="25" /></span>
-              <h3 class="h3">Sistemas</h3>
+          <div class="svc__stage" id="svc-stage" role="tabpanel" aria-live="polite">
+            <div class="svc__frame" data-dir="down">
+              <div class="svc__slide is-active" data-service="websites">
+                <img src="assets/img/services/websites.webp" srcset="assets/img/services/websites-sm.webp 1000w, assets/img/services/websites.webp 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Site de advocacia exibido em um iPad e um iPhone" width="2000" height="1250" fetchpriority="high" />
+              </div>
+              <div class="svc__slide" data-service="ecommerce">
+                <img src="assets/img/services/ecommerce.webp" srcset="assets/img/services/ecommerce-sm.webp 1000w, assets/img/services/ecommerce.webp 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Loja virtual de pet shop exibida em um notebook e um celular" width="2000" height="1250" loading="lazy" />
+              </div>
+              <div class="svc__slide" data-service="sistemas">
+                <img src="assets/img/services/sistemas.webp" srcset="assets/img/services/sistemas-sm.webp 1000w, assets/img/services/sistemas.webp 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Painel de gestão de barbearia exibido em um notebook" width="2000" height="1250" loading="lazy" />
+              </div>
+              <div class="svc__slide" data-service="seo">
+                <img src="assets/img/services/seo.webp" srcset="assets/img/services/seo-sm.webp 1000w, assets/img/services/seo.webp 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Resultado de busca em primeiro lugar com métricas de crescimento orgânico" width="2000" height="1250" loading="lazy" />
+              </div>
+              <div class="svc__hud">
+                <span class="svc__counter"><b class="svc__counter-cur">01</b> / 04</span>
+                <button class="svc__hud-btn" type="button" data-details-current>Ver detalhes <span aria-hidden="true">↗</span></button>
+              </div>
             </div>
-            <p class="service-card__text">Desenvolvemos a estrutura, as funcionalidades e a experiência do seu sistema para otimizar processos, centralizar informações, facilitar o uso e tornar as operações do seu negócio mais ágeis, organizadas e eficientes.</p>
-            <span class="more">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
-          </a>
-
-          <a href="#contato" class="service-card" data-reveal>
-            <div class="service-card__top">
-              <span class="service-card__icon"><img src="assets/icons/websites.svg" alt="" width="29" height="25" /></span>
-              <h3 class="h3">Websites</h3>
-            </div>
-            <p class="service-card__text">Nossos especialistas em design criam sites visualmente impressionantes e fáceis de usar, otimizados para desempenho e conversão, garantindo uma experiência online fluida para seus visitantes.</p>
-            <span class="more">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
-          </a>
-
-          <a href="#contato" class="service-card" data-reveal>
-            <div class="service-card__top">
-              <span class="service-card__icon"><img src="assets/icons/ecommerce.svg" alt="" width="36" height="36" /></span>
-              <h3 class="h3">E-commerce</h3>
-            </div>
-            <p class="service-card__text">Criamos e-commerces para empresas que querem levar suas vendas para o digital, apresentar seus produtos de forma profissional e oferecer aos clientes uma experiência de compra simples, segura e eficiente.</p>
-            <span class="more">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
-          </a>
+          </div>
         </div>
       </div>
     </section>
@@ -302,10 +374,10 @@
           </nav>
           <nav class="info__menu" aria-label="Serviços">
             <p class="info__title">Serviços</p>
-            <a href="#servicos">SEO</a>
-            <a href="#servicos">Sistemas</a>
-            <a href="#servicos">Websites</a>
-            <a href="#servicos">E-commerce</a>
+            <a href="#servicos" data-open-service="seo">SEO</a>
+            <a href="#servicos" data-open-service="sistemas">Sistemas</a>
+            <a href="#servicos" data-open-service="websites">Websites</a>
+            <a href="#servicos" data-open-service="ecommerce">E-commerce</a>
           </nav>
         </div>
       </div>
@@ -323,6 +395,19 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- Detalhes do serviço -->
+  <dialog class="drawer" id="svc-drawer" aria-labelledby="drawer-title">
+    <div class="drawer__inner">
+      <div class="drawer__top">
+        <span class="tag" id="drawer-num">Serviço 01</span>
+        <button class="drawer__close" type="button" aria-label="Fechar detalhes" data-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="drawer__content" id="drawer-content"></div>
+    </div>
+  </dialog>
+
+  <script src="script.js?v=2"></script>
 </body>
 </html>

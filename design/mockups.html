@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>XE — Service mockups</title>
+<!--
+  Fonte das imagens da seção de serviços.
+  Renderize uma cena por vez: mockups.html?scene=1 … ?scene=4 (janela 1600x1000, DPR 2).
+  Veja design/render.sh.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600;700&family=Unbounded:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1600px; height: 1000px; overflow: hidden; background: #0b0a10; }
+  body { font-family: "Inter", sans-serif; -webkit-font-smoothing: antialiased; }
+  svg { display: block; }
+
+  .scene { position: relative; width: 1600px; height: 1000px; overflow: hidden; display: none;
+    background:
+      radial-gradient(900px 620px at 50% 46%, rgba(141, 28, 255, .30), transparent 70%),
+      radial-gradient(1200px 700px at 50% 120%, rgba(60, 20, 140, .45), transparent 70%),
+      linear-gradient(#0d0b14, #08070c);
+  }
+  .scene.on { display: block; }
+  .scene::before { /* faint grid */
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(800px 560px at 50% 50%, #000 30%, transparent 75%);
+  }
+  .scene::after { /* grain-ish vignette */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(1100px 800px at 50% 50%, transparent 55%, rgba(0,0,0,.55));
+  }
+  .floor { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(0,0,0,.75), transparent); filter: blur(10px); }
+
+  /* ---------- Devices ---------- */
+  .laptop { position: absolute; }
+  .laptop .lid { background: linear-gradient(#1c1c22, #0c0c10); border-radius: 26px 26px 8px 8px; padding: 16px 16px 30px;
+    box-shadow: 0 0 0 1.5px #3a3a44 inset, 0 40px 90px rgba(0,0,0,.6); position: relative; }
+  .laptop .lid::before { content: ""; position: absolute; top: 6px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #23232b; }
+  .laptop .screen { position: relative; overflow: hidden; border-radius: 6px; background: #000; }
+  .laptop .base { height: 24px; margin: 0 -70px; border-radius: 4px 4px 26px 26px;
+    background: linear-gradient(#e2e2e8, #a7a7b1 55%, #6d6d76); position: relative; box-shadow: 0 30px 60px rgba(0,0,0,.6); }
+  .laptop .base::before { content: ""; position: absolute; top: 0; left: 50%; width: 170px; margin-left: -85px; height: 9px; border-radius: 0 0 12px 12px; background: linear-gradient(#a3a3ad, #c9c9d1); }
+
+  .tablet { position: absolute; background: #0d0d11; border-radius: 42px; padding: 22px;
+    box-shadow: 0 0 0 2px #3b3b45 inset, 0 0 0 6px #18181d, 0 50px 110px rgba(0,0,0,.65); }
+  .tablet .screen { position: relative; overflow: hidden; border-radius: 20px; background: #000; }
+
+  .phone { position: absolute; background: #0d0d11; border-radius: 54px; padding: 13px;
+    box-shadow: 0 0 0 2px #45454f inset, 0 0 0 5px #1a1a20, 0 40px 90px rgba(0,0,0,.7); }
+  .phone .screen { position: relative; overflow: hidden; border-radius: 42px; background: #000; }
+  .phone .island { position: absolute; top: 12px; left: 50%; width: 92px; height: 26px; margin-left: -46px; background: #000; border-radius: 20px; z-index: 5; }
+
+  .ui { position: absolute; top: 0; left: 0; transform-origin: 0 0; overflow: hidden; }
+  .glare { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, rgba(255,255,255,.10), transparent 38%); z-index: 9; }
+
+  /* ---------- Floating cards ---------- */
+  .float { position: absolute; z-index: 20; border-radius: 22px; padding: 18px 20px; font-family: "Inter";
+    background: rgba(20, 18, 28, .78); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(141,28,255,.08); color: #fff; }
+  .float.light { background: rgba(255,255,255,.94); color: #15131a; border-color: rgba(255,255,255,.6); }
+  .f-row { display: flex; align-items: center; gap: 12px; }
+  .f-ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; }
+  .f-t { font-size: 15px; font-weight: 600; letter-spacing: -.2px; }
+  .f-s { font-size: 13px; opacity: .6; margin-top: 2px; }
+  .f-big { font-family: "Unbounded"; font-size: 30px; letter-spacing: -1px; }
+
+  /* =====================================================
+     SCENE 1 — Websites & Landing Pages (law firm)
+     ===================================================== */
+  .law { width: 1180px; height: 820px; background: #0f1524; color: #f3ece2; font-family: "Inter"; position: relative; }
+  .law::before { content: ""; position: absolute; inset: 0; background: radial-gradient(700px 500px at 78% 40%, rgba(200,164,106,.16), transparent 70%); }
+  .law-nav { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 30px 56px; }
+  .law-logo { font-family: "Fraunces"; font-size: 24px; letter-spacing: -.3px; }
+  .law-logo small { display: block; font-family: "Inter"; font-size: 9px; letter-spacing: 3px; color: #c8a46a; margin-top: 2px; }
+  .law-links { display: flex; gap: 34px; font-size: 14px; color: rgba(243,236,226,.7); }
+  .law-btn { padding: 12px 22px; border-radius: 99px; font-size: 13px; font-weight: 600; background: #c8a46a; color: #121826; }
+  .law-btn.ghost { background: transparent; color: #f3ece2; box-shadow: 0 0 0 1px rgba(243,236,226,.3) inset; }
+  .law-hero { position: relative; display: grid; grid-template-columns: 1.08fr .92fr; gap: 30px; padding: 40px 56px 0; }
+  .law-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 99px; font-size: 12px; color: rgba(243,236,226,.8); background: rgba(243,236,226,.07); border: 1px solid rgba(243,236,226,.12); }
+  .law-pill i { width: 7px; height: 7px; border-radius: 50%; background: #c8a46a; box-shadow: 0 0 0 4px rgba(200,164,106,.2); }
+  .law h1 { font-family: "Fraunces"; font-weight: 400; font-size: 66px; line-height: 1.02; letter-spacing: -2px; margin: 26px 0 22px; }
+  .law h1 em { font-style: italic; color: #c8a46a; }
+  .law p.lead { font-size: 17px; line-height: 1.6; color: rgba(243,236,226,.68); max-width: 470px; }
+  .law-ctas { display: flex; gap: 12px; margin-top: 32px; }
+  .law-ctas .law-btn { padding: 16px 28px; font-size: 14px; }
+  .law-stats { display: flex; gap: 40px; margin-top: 52px; padding-top: 28px; border-top: 1px solid rgba(243,236,226,.12); }
+  .law-stats b { display: block; font-family: "Fraunces"; font-weight: 400; font-size: 34px; color: #f3ece2; }
+  .law-stats span { font-size: 12px; color: rgba(243,236,226,.55); }
+  .law-visual { position: relative; height: 620px; }
+  .law-arch { position: absolute; right: 0; top: 0; width: 420px; height: 600px; border-radius: 220px 220px 28px 28px; overflow: hidden;
+    background: linear-gradient(170deg, #2b3550, #172036 60%, #10172a); box-shadow: 0 0 0 1px rgba(243,236,226,.08) inset; }
+  .law-card { position: absolute; background: rgba(243,236,226,.96); color: #121826; border-radius: 18px; padding: 16px 18px; box-shadow: 0 20px 40px rgba(0,0,0,.35); }
+  .law-card .t { font-size: 14px; font-weight: 600; }
+  .law-card .s { font-size: 12px; color: #6b6f7a; margin-top: 2px; }
+
+  .law-m { width: 390px; height: 844px; background: #0f1524; color: #f3ece2; position: relative; padding: 64px 24px 0; }
+  .law-m::before { content: ""; position: absolute; inset: 0; background: radial-gradient(360px 300px at 70% 70%, rgba(200,164,106,.18), transparent 70%); }
+  .law-m > * { position: relative; }
+  .law-m .bar { display: flex; justify-content: space-between; align-items: center; }
+  .law-m .burger { width: 22px; height: 12px; border-top: 2px solid #f3ece2; border-bottom: 2px solid #f3ece2; }
+  .law-m h1 { font-size: 40px; letter-spacing: -1.2px; margin: 22px 0 14px; }
+  .law-m p.lead { font-size: 14px; }
+  .law-m .law-arch { position: relative; width: 100%; height: 330px; margin-top: 26px; border-radius: 170px 170px 24px 24px; }
+
+  /* =====================================================
+     SCENE 2 — E-commerce (pet shop)
+     ===================================================== */
+  .shop { width: 1280px; height: 800px; background: #fbf7f2; color: #1d1a17; font-family: "Inter"; }
+  .shop-promo { background: #1d1a17; color: #fbf7f2; font-size: 12px; text-align: center; padding: 9px; letter-spacing: .3px; }
+  .shop-promo b { color: #ffb38f; font-weight: 600; }
+  .shop-nav { display: flex; align-items: center; gap: 34px; padding: 22px 48px; border-bottom: 1px solid #efe6db; }
+  .shop-logo { display: flex; align-items: center; gap: 8px; font-family: "Unbounded"; font-size: 20px; letter-spacing: -.6px; }
+  .shop-links { display: flex; gap: 26px; font-size: 14px; color: #5d5650; }
+  .shop-search { margin-left: auto; width: 300px; height: 42px; border-radius: 99px; background: #f1e9df; display: flex; align-items: center; gap: 10px; padding: 0 16px; font-size: 13px; color: #8d857c; }
+  .shop-cart { position: relative; width: 42px; height: 42px; border-radius: 50%; background: #1d1a17; display: grid; place-items: center; }
+  .shop-cart b { position: absolute; top: -3px; right: -3px; width: 18px; height: 18px; border-radius: 50%; background: #ff6b35; color: #fff; font-size: 10px; display: grid; place-items: center; }
+  .shop-hero { display: grid; grid-template-columns: 1.55fr 1fr; gap: 18px; padding: 24px 48px 0; }
+  .banner { border-radius: 26px; padding: 34px 38px; position: relative; overflow: hidden; height: 250px; }
+  .banner h2 { font-family: "Unbounded"; font-weight: 500; font-size: 32px; line-height: 1.12; letter-spacing: -1.2px; max-width: 400px; }
+  .banner p { font-size: 14px; color: #6b5f55; margin-top: 12px; }
+  .banner .btn { display: inline-block; margin-top: 22px; padding: 12px 22px; border-radius: 99px; background: #1d1a17; color: #fff; font-size: 13px; font-weight: 600; }
+  .shop-sec { display: flex; justify-content: space-between; align-items: baseline; padding: 30px 48px 16px; }
+  .shop-sec h3 { font-family: "Unbounded"; font-weight: 500; font-size: 20px; letter-spacing: -.6px; }
+  .shop-sec span { font-size: 13px; color: #8d857c; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; padding: 0 48px; }
+  .prod { background: #fff; border-radius: 22px; padding: 12px; box-shadow: 0 1px 0 #efe6db; }
+  .prod .img { height: 150px; border-radius: 16px; display: grid; place-items: center; position: relative; }
+  .prod .tag { position: absolute; top: 10px; left: 10px; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 99px; background: #1d1a17; color: #fff; }
+  .prod .nm { font-size: 14px; font-weight: 600; margin: 12px 4px 4px; }
+  .prod .rt { font-size: 11px; color: #a1978d; margin: 0 4px; }
+  .prod .pr { display: flex; justify-content: space-between; align-items: center; margin: 10px 4px 2px; }
+  .prod .pr b { font-size: 16px; }
+  .prod .pr i { width: 32px; height: 32px; border-radius: 50%; background: #ff6b35; display: grid; place-items: center; }
+
+  .pay { width: 390px; height: 844px; background: #fbf7f2; color: #1d1a17; padding: 64px 22px 0; font-family: "Inter"; }
+  .pay .top { display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: 16px; }
+  .pay .steps { display: flex; gap: 6px; margin: 20px 0 22px; }
+  .pay .steps i { flex: 1; height: 4px; border-radius: 4px; background: #1d1a17; }
+  .pay .steps i.off { background: #e8ded2; }
+  .pay .card { background: #fff; border-radius: 22px; padding: 18px; margin-bottom: 12px; }
+  .pay .line { display: flex; justify-content: space-between; font-size: 13px; color: #6b5f55; margin: 8px 0; }
+  .pay .line b { color: #1d1a17; }
+  .pay .total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; padding-top: 12px; border-top: 1px dashed #e8ded2; margin-top: 10px; }
+  .pay .ok { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 16px; background: #e5f6ec; color: #17803d; font-size: 13px; font-weight: 600; }
+  .pay .cta { margin-top: 14px; height: 54px; border-radius: 99px; background: #ff6b35; color: #fff; font-weight: 600; display: grid; place-items: center; font-size: 15px; }
+
+  /* =====================================================
+     SCENE 3 — Sistemas sob medida (dashboard)
+     ===================================================== */
+  .dash { width: 1280px; height: 800px; background: #0d0d12; color: #f4f3f8; font-family: "Inter"; display: grid; grid-template-columns: 228px 1fr; }
+  .side { background: #121219; border-right: 1px solid #1f1f29; padding: 26px 18px; }
+  .side .brand { display: flex; align-items: center; gap: 10px; font-family: "Unbounded"; font-size: 17px; margin-bottom: 34px; padding-left: 6px; }
+  .side .brand i { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, #a64dff, #6a12d6); display: grid; place-items: center; }
+  .nav-i { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 12px; font-size: 14px; color: #8f8ea0; margin-bottom: 4px; }
+  .nav-i s { width: 18px; height: 18px; border-radius: 5px; border: 1.8px solid currentColor; text-decoration: none; }
+  .nav-i.on { background: rgba(141,28,255,.16); color: #fff; }
+  .nav-i.on s { border-color: #b26bff; background: rgba(178,107,255,.25); }
+  .side .pro { position: absolute; bottom: 26px; left: 18px; right: 18px; }
+  .main { padding: 26px 30px; overflow: hidden; }
+  .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .head h1 { font-size: 24px; font-weight: 600; letter-spacing: -.5px; }
+  .head p { font-size: 13px; color: #8f8ea0; margin-top: 4px; }
+  .head .new { padding: 12px 18px; border-radius: 12px; background: #8d1cff; font-size: 13px; font-weight: 600; box-shadow: 0 8px 24px rgba(141,28,255,.4); }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
+  .kpi { background: #15151d; border: 1px solid #20202b; border-radius: 18px; padding: 18px; }
+  .kpi span { font-size: 12px; color: #8f8ea0; }
+  .kpi b { display: block; font-size: 26px; font-weight: 600; letter-spacing: -.8px; margin: 8px 0 6px; }
+  .kpi em { font-style: normal; font-size: 12px; color: #4ade80; }
+  .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
+  .bar3 { height: 8px; border-radius: 8px; background: #20202b; margin-top: 14px; overflow: hidden; }
+  .bar3 i { display: block; height: 100%; border-radius: 8px; background: linear-gradient(90deg,#7012e0,#b26bff); }
+  .sub3 { font-size: 12px; color: #8f8ea0; margin-top: 10px; }
+  .row2 { display: grid; grid-template-columns: 1.25fr 1fr; gap: 14px; }
+  .panel { background: #15151d; border: 1px solid #20202b; border-radius: 18px; padding: 20px; }
+  .panel h4 { font-size: 15px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+  .panel h4 span { font-size: 12px; font-weight: 500; color: #8f8ea0; padding: 6px 10px; border-radius: 8px; background: #1d1d27; }
+  .appt { display: grid; grid-template-columns: 54px 1fr auto; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid #1f1f29; font-size: 13px; }
+  .appt:last-child { border: 0; }
+  .appt .h { color: #8f8ea0; font-variant-numeric: tabular-nums; }
+  .appt .who { display: flex; align-items: center; gap: 10px; }
+  .appt .av { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; font-size: 11px; font-weight: 700; }
+  .appt .who small { display: block; color: #8f8ea0; font-size: 11px; margin-top: 2px; }
+  .pill { font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 99px; }
+  .pill.g { background: rgba(74,222,128,.12); color: #4ade80; }
+  .pill.a { background: rgba(251,191,36,.12); color: #fbbf24; }
+  .pill.p { background: rgba(178,107,255,.15); color: #c08bff; }
+
+  /* =====================================================
+     SCENE 4 — SEO
+     ===================================================== */
+  .browser { position: absolute; border-radius: 22px; overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgba(255,255,255,.15), 0 50px 110px rgba(0,0,0,.65); }
+  .bbar { height: 52px; background: #f1f0f4; display: flex; align-items: center; gap: 18px; padding: 0 20px; border-bottom: 1px solid #e3e2e8; }
+  .dots { display: flex; gap: 8px; }
+  .dots i { width: 12px; height: 12px; border-radius: 50%; }
+  .url { flex: 1; max-width: 560px; margin: 0 auto; height: 32px; border-radius: 10px; background: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; color: #6b6a75; }
+  .serp { padding: 26px 56px; font-family: "Inter"; color: #1d1c22; }
+  .sbox { display: flex; align-items: center; gap: 14px; height: 54px; border-radius: 99px; box-shadow: 0 1px 6px rgba(32,33,36,.18); padding: 0 22px; font-size: 16px; max-width: 700px; }
+  .tabs { display: flex; gap: 26px; font-size: 13px; color: #6b6a75; margin: 18px 0 8px 10px; }
+  .tabs b { color: #8d1cff; border-bottom: 2px solid #8d1cff; padding-bottom: 8px; font-weight: 600; }
+  .res { max-width: 680px; padding: 18px 20px; border-radius: 18px; margin-bottom: 6px; }
+  .res .site { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .res .fav { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; }
+  .res .site small { display: block; color: #6b6a75; font-size: 12px; }
+  .res h5 { font-size: 20px; font-weight: 400; color: #4d1ab8; margin: 10px 0 6px; letter-spacing: -.2px; }
+  .res p { font-size: 13.5px; line-height: 1.55; color: #4d4c56; }
+  .res.top { background: linear-gradient(#faf5ff, #fff); box-shadow: 0 0 0 2px #8d1cff, 0 18px 40px rgba(141,28,255,.18); position: relative; }
+  .res.dim { opacity: .45; filter: grayscale(.4); }
+  .rank { position: absolute; top: -14px; right: 18px; padding: 6px 12px; border-radius: 99px; background: #8d1cff; color: #fff; font-size: 12px; font-weight: 700; font-family: "Unbounded"; box-shadow: 0 8px 20px rgba(141,28,255,.45); }
+  .links { display: flex; gap: 16px; margin-top: 10px; font-size: 13px; color: #4d1ab8; }
+</style>
+</head>
+<body>
+
+<!-- ================= SCENE 1 ================= -->
+<section class="scene" id="s1">
+  <div class="floor" style="bottom:90px;width:1200px;height:90px"></div>
+
+  <div class="tablet" style="left:250px;top:120px;transform:perspective(2600px) rotateY(-9deg) rotateX(4deg) rotate(-1.5deg)">
+    <div class="screen" style="width:1040px;height:723px">
+      <div class="ui" style="transform:scale(.8814)">
+        <div class="law">
+          <div class="law-nav">
+            <div class="law-logo">Layla Rocha<small>ADVOCACIA PREVIDENCIÁRIA</small></div>
+            <div class="law-links"><span>Início</span><span>Sobre</span><span>Áreas de atuação</span><span>Depoimentos</span><span>Contato</span></div>
+            <div class="law-btn">Fale comigo</div>
+          </div>
+          <div class="law-hero">
+            <div>
+              <span class="law-pill"><i></i>OAB/PI · Atendimento em todo o Brasil</span>
+              <h1>Seus direitos previdenciários, <em>nossa missão.</em></h1>
+              <p class="lead">Aposentadorias, BPC/LOAS, auxílio-doença e revisões do INSS com atendimento humanizado — do primeiro contato à conquista do seu benefício.</p>
+              <div class="law-ctas"><div class="law-btn">Quero meu direito →</div><div class="law-btn ghost">Ver áreas de atuação</div></div>
+              <div class="law-stats">
+                <div><b>+1.200</b><span>benefícios concedidos</span></div>
+                <div><b>4,9★</b><span>avaliação dos clientes</span></div>
+                <div><b>10 anos</b><span>de experiência</span></div>
+              </div>
+            </div>
+            <div class="law-visual">
+              <div class="law-arch">
+                <svg viewBox="0 0 420 600" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+                  <defs>
+                    <radialGradient id="halo" cx=".5" cy=".42" r=".55"><stop offset="0" stop-color="#c8a46a" stop-opacity=".32"/><stop offset="1" stop-color="#c8a46a" stop-opacity="0"/></radialGradient>
+                    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ecd3a2"/><stop offset=".5" stop-color="#c8a46a"/><stop offset="1" stop-color="#8e6a35"/></linearGradient>
+                  </defs>
+                  <rect width="420" height="600" fill="url(#halo)"/>
+                  <g stroke="rgba(243,236,226,.06)" stroke-width="1">
+                    <line x1="60" y1="120" x2="60" y2="600"/><line x1="110" y1="80" x2="110" y2="600"/><line x1="310" y1="80" x2="310" y2="600"/><line x1="360" y1="120" x2="360" y2="600"/>
+                  </g>
+                  <g fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="210" cy="150" r="13"/>
+                    <path d="M210 163v300"/>
+                    <path d="M110 205h200"/>
+                    <path d="M210 205c-20-10-40-14-60-14M210 205c20-10 40-14 60-14" stroke-width="3"/>
+                    <path d="M118 205l-46 110M118 205l46 110"/>
+                    <path d="M302 205l-46 110M302 205l46 110"/>
+                    <path d="M66 315a52 22 0 0 0 104 0z" fill="rgba(200,164,106,.18)"/>
+                    <path d="M250 315a52 22 0 0 0 104 0z" fill="rgba(200,164,106,.18)"/>
+                    <path d="M150 470h120M130 500h160"/>
+                    <path d="M170 463c10-24 70-24 80 0"/>
+                  </g>
+                  <circle cx="110" cy="205" r="7" fill="#ecd3a2"/><circle cx="310" cy="205" r="7" fill="#ecd3a2"/>
+                </svg>
+              </div>
+              <div class="law-card" style="left:-20px;top:40px;width:250px">
+                <div class="f-row"><div class="f-ico" style="background:#e9f5ee;width:36px;height:36px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17803d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+                <div><div class="t">Aposentadoria concedida</div><div class="s">Maria S. · 62 anos · Teresina</div></div></div>
+              </div>
+              <div class="law-card" style="right:-14px;bottom:70px;width:200px">
+                <div class="t" style="font-size:22px;font-family:Fraunces;font-weight:400">4,9 <span style="color:#c8a46a;font-size:16px">★★★★★</span></div>
+                <div class="s">+320 avaliações reais</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="glare"></div>
+    </div>
+  </div>
+
+  <div class="phone" style="left:1090px;top:330px;transform:perspective(2000px) rotateY(-12deg) rotate(3deg)">
+    <div class="island"></div>
+    <div class="screen" style="width:262px;height:567px">
+      <div class="ui" style="transform:scale(.6718)">
+        <div class="law law-m">
+          <div class="bar"><div class="law-logo" style="font-size:20px">Layla Rocha</div><div class="burger"></div></div>
+          <span class="law-pill" style="margin-top:28px"><i></i>Atendimento em todo o Brasil</span>
+          <h1>Seus direitos, <em>nossa missão.</em></h1>
+          <p class="lead">Aposentadorias, BPC/LOAS e revisões do INSS com atendimento humanizado.</p>
+          <div class="law-ctas" style="margin-top:22px"><div class="law-btn" style="flex:1;text-align:center">Quero meu direito →</div></div>
+          <div class="law-arch" style="position:relative;right:auto">
+            <svg viewBox="0 0 420 600" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+                  <defs>
+                    <radialGradient id="halo" cx=".5" cy=".42" r=".55"><stop offset="0" stop-color="#c8a46a" stop-opacity=".32"/><stop offset="1" stop-color="#c8a46a" stop-opacity="0"/></radialGradient>
+                    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ecd3a2"/><stop offset=".5" stop-color="#c8a46a"/><stop offset="1" stop-color="#8e6a35"/></linearGradient>
+                  </defs>
+                  <rect width="420" height="600" fill="url(#halo)"/>
+                  <g stroke="rgba(243,236,226,.06)" stroke-width="1">
+                    <line x1="60" y1="120" x2="60" y2="600"/><line x1="110" y1="80" x2="110" y2="600"/><line x1="310" y1="80" x2="310" y2="600"/><line x1="360" y1="120" x2="360" y2="600"/>
+                  </g>
+                  <g fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="210" cy="150" r="13"/>
+                    <path d="M210 163v300"/>
+                    <path d="M110 205h200"/>
+                    <path d="M210 205c-20-10-40-14-60-14M210 205c20-10 40-14 60-14" stroke-width="3"/>
+                    <path d="M118 205l-46 110M118 205l46 110"/>
+                    <path d="M302 205l-46 110M302 205l46 110"/>
+                    <path d="M66 315a52 22 0 0 0 104 0z" fill="rgba(200,164,106,.18)"/>
+                    <path d="M250 315a52 22 0 0 0 104 0z" fill="rgba(200,164,106,.18)"/>
+                    <path d="M150 470h120M130 500h160"/>
+                    <path d="M170 463c10-24 70-24 80 0"/>
+                  </g>
+                  <circle cx="110" cy="205" r="7" fill="#ecd3a2"/><circle cx="310" cy="205" r="7" fill="#ecd3a2"/>
+                </svg>
+          </div>
+        </div>
+      </div>
+      <div class="glare"></div>
+    </div>
+  </div>
+
+  <div class="float" style="left:70px;top:790px;width:300px">
+    <div class="f-row">
+      <div class="f-ico" style="background:rgba(141,28,255,.2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c08bff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+      <div><div class="f-t">Taxa de conversão</div><div class="f-s">últimos 30 dias</div></div>
+    </div>
+    <div class="f-row" style="margin-top:14px;align-items:flex-end;justify-content:space-between">
+      <div class="f-big">12,4%</div>
+      <svg width="120" height="44" viewBox="0 0 120 44"><defs><linearGradient id="cv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8d1cff" stop-opacity=".5"/><stop offset="1" stop-color="#8d1cff" stop-opacity="0"/></linearGradient></defs><path d="M0 38 L20 33 L40 35 L60 24 L80 26 L100 12 L120 4 L120 44 L0 44Z" fill="url(#cv)"/><path d="M0 38 L20 33 L40 35 L60 24 L80 26 L100 12 L120 4" fill="none" stroke="#b26bff" stroke-width="2.5" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCENE 2 ================= -->
+<section class="scene" id="s2">
+  <div class="floor" style="bottom:70px;width:1300px;height:90px"></div>
+
+  <div class="laptop" style="left:150px;top:110px;width:1080px">
+    <div class="lid">
+      <div class="screen" style="width:1048px;height:655px">
+        <div class="ui" style="transform:scale(.81875)">
+          <div class="shop">
+            <div class="shop-promo">Frete grátis acima de R$ 199 · <b>5% off no Pix</b> · Entrega em até 24h em Teresina</div>
+            <div class="shop-nav">
+              <div class="shop-logo"><svg width="26" height="26" viewBox="0 0 24 24" fill="#ff6b35"><ellipse cx="6" cy="9" rx="2.2" ry="2.8"/><ellipse cx="10" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="14.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="18.5" cy="9" rx="2.2" ry="2.8"/><path d="M12 11c3.5 0 6.5 4 6.5 6.8 0 2.2-1.8 3.2-3.6 3.2-1.3 0-2-.6-2.9-.6s-1.6.6-2.9.6c-1.8 0-3.6-1-3.6-3.2C5.5 15 8.5 11 12 11z"/></svg>patinhas</div>
+              <div class="shop-links"><span style="color:#1d1a17;font-weight:600">Cães</span><span>Gatos</span><span>Rações</span><span>Brinquedos</span><span>Farmácia</span></div>
+              <div class="shop-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8d857c" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Buscar produtos, marcas...</div>
+              <div class="shop-cart"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1.2 11.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><b>3</b></div>
+            </div>
+            <div class="shop-hero">
+              <div class="banner" style="background:linear-gradient(120deg,#ffd9c4,#ffe9dc)">
+                <h2>Tudo para quem você ama de quatro patas.</h2>
+                <p>Mais de 2.000 produtos com entrega rápida.</p>
+                <span class="btn">Comprar agora →</span>
+                <svg style="position:absolute;right:30px;bottom:-10px" width="290" height="250" viewBox="0 0 290 250">
+                  <circle cx="160" cy="140" r="110" fill="#ffb38f" opacity=".55"/>
+                  <!-- dog -->
+                  <ellipse cx="165" cy="215" rx="88" ry="60" fill="#e08a4f"/>
+                  <path d="M95 92c-26 4-38 40-30 70 10-6 24-26 30-70z" fill="#8a4a24"/>
+                  <path d="M235 92c26 4 38 40 30 70-10-6-24-26-30-70z" fill="#8a4a24"/>
+                  <ellipse cx="165" cy="128" rx="74" ry="70" fill="#f0a266"/>
+                  <ellipse cx="165" cy="160" rx="40" ry="30" fill="#ffe2c9"/>
+                  <circle cx="137" cy="118" r="8" fill="#2b1a10"/><circle cx="193" cy="118" r="8" fill="#2b1a10"/>
+                  <circle cx="139" cy="115" r="2.5" fill="#fff"/><circle cx="195" cy="115" r="2.5" fill="#fff"/>
+                  <ellipse cx="165" cy="146" rx="13" ry="9" fill="#2b1a10"/>
+                  <path d="M152 166q13 12 26 0" stroke="#2b1a10" stroke-width="4" fill="none" stroke-linecap="round"/>
+                  <rect x="112" y="186" width="106" height="16" rx="8" fill="#1d1a17"/><circle cx="165" cy="206" r="9" fill="#ffc94a"/>
+                </svg>
+              </div>
+              <div class="banner" style="background:linear-gradient(140deg,#d8efe1,#ecf8f0)">
+                <span style="font-size:11px;font-weight:700;letter-spacing:1px;color:#2f7a52">OFERTA DA SEMANA</span>
+                <h2 style="font-size:26px;margin-top:10px">Rações premium até 30% off</h2>
+                <span class="btn" style="background:#2f7a52">Ver ofertas</span>
+              </div>
+            </div>
+            <div class="shop-sec"><h3>Mais vendidos</h3><span>Ver todos →</span></div>
+            <div class="grid4">
+              <div class="prod"><div class="img" style="background:#fff1e8"><span class="tag">-20%</span>
+                <svg width="90" height="120" viewBox="0 0 90 120"><path d="M14 18h62l8 92a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6z" fill="#ff6b35"/><path d="M14 18h62l-4-12H18z" fill="#d9542a"/><rect x="18" y="44" width="54" height="40" rx="8" fill="#fff"/><text x="45" y="62" text-anchor="middle" font-family="Unbounded" font-size="9" fill="#1d1a17">PREMIUM</text><text x="45" y="76" text-anchor="middle" font-family="Inter" font-size="8" fill="#8d857c">adulto · 10kg</text></svg></div>
+                <div class="nm">Ração Premium Adulto 10kg</div><div class="rt">★★★★★ (482)</div><div class="pr"><b>R$ 189,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
+              <div class="prod"><div class="img" style="background:#eef3ff">
+                <svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="40" fill="#4f7cff"/><path d="M20 40c20 10 50 10 70 0M20 70c20-10 50-10 70 0" stroke="#fff" stroke-width="6" fill="none" opacity=".9"/><circle cx="42" cy="38" r="8" fill="#fff" opacity=".35"/></svg></div>
+                <div class="nm">Bola Interativa Mordedor</div><div class="rt">★★★★★ (219)</div><div class="pr"><b>R$ 39,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
+              <div class="prod"><div class="img" style="background:#f3efff"><span class="tag" style="background:#8d1cff">NOVO</span>
+                <svg width="120" height="90" viewBox="0 0 120 90"><ellipse cx="60" cy="56" rx="54" ry="28" fill="#7a5cff"/><ellipse cx="60" cy="50" rx="40" ry="18" fill="#cbbcff"/><ellipse cx="60" cy="48" rx="30" ry="11" fill="#e8e0ff"/></svg></div>
+                <div class="nm">Caminha Nuvem Antiestresse</div><div class="rt">★★★★☆ (98)</div><div class="pr"><b>R$ 149,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
+              <div class="prod"><div class="img" style="background:#fff7df">
+                <svg width="120" height="100" viewBox="0 0 120 100"><ellipse cx="60" cy="50" rx="44" ry="30" fill="none" stroke="#ffb400" stroke-width="12"/><rect x="48" y="70" width="24" height="16" rx="4" fill="#9a6b00"/><circle cx="60" cy="92" r="7" fill="#ffd36b"/></svg></div>
+                <div class="nm">Coleira Ajustável Couro</div><div class="rt">★★★★★ (305)</div><div class="pr"><b>R$ 59,90</b><i><svg width="14" height="14" viewBox="0 0 24 24" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="glare"></div>
+      </div>
+    </div>
+    <div class="base"></div>
+  </div>
+
+  <div class="phone" style="left:1140px;top:300px;transform:perspective(2000px) rotateY(-14deg) rotate(2deg)">
+    <div class="island"></div>
+    <div class="screen" style="width:262px;height:567px">
+      <div class="ui" style="transform:scale(.6718)">
+        <div class="pay">
+          <div class="top"><span>‹</span><span>Pagamento</span><span style="opacity:0">‹</span></div>
+          <div class="steps"><i></i><i></i><i></i><i class="off"></i></div>
+          <div class="card">
+            <div style="font-size:12px;color:#8d857c;margin-bottom:12px">Pague com Pix · 5% off</div>
+            <svg width="170" height="170" viewBox="0 0 17 17" style="margin:0 auto;display:block" shape-rendering="crispEdges">
+              <rect width="17" height="17" fill="#fff"/>
+              <g fill="#1d1a17">
+                <rect x="0" y="0" width="5" height="5"/><rect x="12" y="0" width="5" height="5"/><rect x="0" y="12" width="5" height="5"/>
+                <rect x="6" y="0" width="1" height="2"/><rect x="8" y="1" width="2" height="1"/><rect x="6" y="3" width="3" height="1"/><rect x="10" y="3" width="1" height="2"/>
+                <rect x="0" y="6" width="2" height="1"/><rect x="3" y="7" width="3" height="1"/><rect x="7" y="6" width="2" height="2"/><rect x="11" y="6" width="1" height="3"/><rect x="13" y="6" width="4" height="1"/>
+                <rect x="1" y="9" width="1" height="2"/><rect x="5" y="9" width="2" height="1"/><rect x="9" y="9" width="3" height="1"/><rect x="14" y="8" width="1" height="3"/><rect x="16" y="9" width="1" height="2"/>
+                <rect x="7" y="11" width="1" height="3"/><rect x="9" y="12" width="2" height="2"/><rect x="12" y="12" width="1" height="1"/><rect x="14" y="13" width="3" height="1"/><rect x="6" y="15" width="3" height="2"/><rect x="11" y="15" width="2" height="1"/><rect x="15" y="15" width="2" height="2"/>
+              </g>
+              <g fill="#fff"><rect x="1" y="1" width="3" height="3"/><rect x="13" y="1" width="3" height="3"/><rect x="1" y="13" width="3" height="3"/></g>
+              <g fill="#1d1a17"><rect x="2" y="2" width="1" height="1"/><rect x="14" y="2" width="1" height="1"/><rect x="2" y="14" width="1" height="1"/></g>
+            </svg>
+          </div>
+          <div class="card">
+            <div class="line"><span>Subtotal (3 itens)</span><b>R$ 289,70</b></div>
+            <div class="line"><span>Frete</span><b style="color:#17803d">Grátis</b></div>
+            <div class="line"><span>Desconto Pix</span><b>− R$ 14,49</b></div>
+            <div class="total"><span>Total</span><span>R$ 275,21</span></div>
+          </div>
+          <div class="ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17803d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pagamento aprovado</div>
+          <div class="cta">Acompanhar pedido</div>
+        </div>
+      </div>
+      <div class="glare"></div>
+    </div>
+  </div>
+
+  <div class="float light" style="left:90px;top:700px;width:360px">
+    <div class="f-row">
+      <div class="f-ico" style="background:#fff1e8"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b35" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1.2 11.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></div>
+      <div style="flex:1"><div class="f-t">Novo pedido #1043</div><div class="f-s" style="opacity:.55">Ana C. · Pix · agora</div></div>
+      <b style="font-size:15px">R$ 275,21</b>
+    </div>
+  </div>
+  <div class="float" style="left:1250px;top:90px;width:230px">
+    <div class="f-s" style="opacity:.6;margin:0">Vendas hoje</div>
+    <div class="f-big" style="margin-top:6px">R$ 8.430</div>
+    <div style="display:flex;gap:5px;align-items:flex-end;height:46px;margin-top:12px">
+      <i style="flex:1;height:30%;background:rgba(255,255,255,.14);border-radius:4px"></i><i style="flex:1;height:45%;background:rgba(255,255,255,.14);border-radius:4px"></i><i style="flex:1;height:38%;background:rgba(255,255,255,.14);border-radius:4px"></i><i style="flex:1;height:62%;background:rgba(255,255,255,.14);border-radius:4px"></i><i style="flex:1;height:55%;background:rgba(255,255,255,.14);border-radius:4px"></i><i style="flex:1;height:100%;background:linear-gradient(#b26bff,#8d1cff);border-radius:4px"></i>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCENE 3 ================= -->
+<section class="scene" id="s3">
+  <div class="floor" style="bottom:70px;width:1300px;height:90px"></div>
+
+  <div class="laptop" style="left:260px;top:110px;width:1080px">
+    <div class="lid">
+      <div class="screen" style="width:1048px;height:655px">
+        <div class="ui" style="transform:scale(.81875)">
+          <div class="dash">
+            <aside class="side" style="position:relative">
+              <div class="brand"><i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M6 4l12 16M18 4L6 20"/></svg></i>Navalha</div>
+              <div class="nav-i on"><s></s>Visão geral</div>
+              <div class="nav-i"><s></s>Agenda</div>
+              <div class="nav-i"><s></s>Clientes</div>
+              <div class="nav-i"><s></s>Serviços</div>
+              <div class="nav-i"><s></s>Equipe</div>
+              <div class="nav-i"><s></s>Financeiro</div>
+              <div class="nav-i"><s></s>Relatórios</div>
+              <div class="pro" style="background:linear-gradient(140deg,rgba(141,28,255,.35),rgba(141,28,255,.08));border:1px solid rgba(178,107,255,.3);border-radius:16px;padding:16px">
+                <div style="font-size:13px;font-weight:600">Lembretes automáticos</div>
+                <div style="font-size:11px;color:#b9b8c9;margin-top:4px;line-height:1.4">WhatsApp ativo · 312 enviados este mês</div>
+              </div>
+            </aside>
+            <div class="main">
+              <div class="head">
+                <div><h1>Bom dia, Rafael</h1><p>Quarta-feira, 8 de outubro · 28 agendamentos hoje</p></div>
+                <div style="display:flex;gap:10px;align-items:center">
+                  <div style="width:42px;height:42px;border-radius:12px;background:#15151d;border:1px solid #20202b"></div>
+                  <div class="new">+ Novo agendamento</div>
+                </div>
+              </div>
+              <div class="kpis">
+                <div class="kpi"><span>Faturamento do dia</span><b>R$ 4.820</b><em>↑ 18% vs. semana passada</em></div>
+                <div class="kpi"><span>Agendamentos</span><b>28</b><em>↑ 6 novos clientes</em></div>
+                <div class="kpi"><span>Ocupação</span><b>86%</b><em>↑ 9 p.p.</em></div>
+                <div class="kpi"><span>Ticket médio</span><b>R$ 72</b><em style="color:#c08bff">Meta: R$ 75</em></div>
+              </div>
+              <div class="row2">
+                <div class="panel">
+                  <h4>Faturamento semanal <span>Últimos 7 dias</span></h4>
+                  <svg width="100%" height="300" viewBox="0 0 560 300" preserveAspectRatio="none" style="margin-top:10px">
+                    <defs>
+                      <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b26bff"/><stop offset="1" stop-color="#7012e0"/></linearGradient>
+                      <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8d1cff" stop-opacity=".25"/><stop offset="1" stop-color="#8d1cff" stop-opacity="0"/></linearGradient>
+                    </defs>
+                    <g stroke="#20202b"><line x1="0" y1="40" x2="560" y2="40"/><line x1="0" y1="110" x2="560" y2="110"/><line x1="0" y1="180" x2="560" y2="180"/><line x1="0" y1="250" x2="560" y2="250"/></g>
+                    <g fill="#24242f">
+                      <rect x="20" y="150" width="46" height="100" rx="10"/><rect x="100" y="120" width="46" height="130" rx="10"/><rect x="180" y="135" width="46" height="115" rx="10"/><rect x="260" y="95" width="46" height="155" rx="10"/><rect x="340" y="110" width="46" height="140" rx="10"/><rect x="500" y="80" width="46" height="170" rx="10"/>
+                    </g>
+                    <rect x="420" y="40" width="46" height="210" rx="10" fill="url(#bar)"/>
+                    <rect x="398" y="0" width="90" height="28" rx="8" fill="#fff"/><text x="443" y="19" text-anchor="middle" font-family="Inter" font-weight="700" font-size="12" fill="#0d0d12">R$ 6.240</text>
+                    <g font-family="Inter" font-size="12" fill="#8f8ea0" text-anchor="middle"><text x="43" y="276">Qui</text><text x="123" y="276">Sex</text><text x="203" y="276">Sáb</text><text x="283" y="276">Dom</text><text x="363" y="276">Seg</text><text x="443" y="276" fill="#fff">Ter</text><text x="523" y="276">Qua</text></g>
+                  </svg>
+                </div>
+                <div class="panel">
+                  <h4>Próximos horários <span>Hoje</span></h4>
+                  <div style="margin-top:10px">
+                    <div class="appt"><span class="h">14:00</span><div class="who"><div class="av" style="background:#2a1f3d;color:#c08bff">JP</div><div>João Pedro<small>Corte + barba · com Lucas</small></div></div><span class="pill g">Confirmado</span></div>
+                    <div class="appt"><span class="h">14:30</span><div class="who"><div class="av" style="background:#1f2d3d;color:#7cb8ff">MA</div><div>Marcos Alves<small>Degradê · com Rafael</small></div></div><span class="pill g">Confirmado</span></div>
+                    <div class="appt"><span class="h">15:00</span><div class="who"><div class="av" style="background:#3d2f1f;color:#ffc27c">TS</div><div>Thiago Souza<small>Barba completa · com Lucas</small></div></div><span class="pill a">Aguardando</span></div>
+                    <div class="appt"><span class="h">15:30</span><div class="who"><div class="av" style="background:#1f3d2a;color:#7cffb0">GL</div><div>Gabriel Lima<small>Corte infantil · com Davi</small></div></div><span class="pill p">Novo cliente</span></div>
+                    <div class="appt"><span class="h">16:00</span><div class="who"><div class="av" style="background:#3d1f2a;color:#ff8fb5">RC</div><div>Rodrigo Costa<small>Pigmentação · com Rafael</small></div></div><span class="pill g">Confirmado</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row3">
+                <div class="panel"><h4>Lucas <span>9 atend.</span></h4><div class="bar3"><i style="width:82%"></i></div><p class="sub3">R$ 1.640 · meta 90%</p></div>
+                <div class="panel"><h4>Rafael <span>11 atend.</span></h4><div class="bar3"><i style="width:94%"></i></div><p class="sub3">R$ 2.010 · meta 104%</p></div>
+                <div class="panel"><h4>Davi <span>8 atend.</span></h4><div class="bar3"><i style="width:68%"></i></div><p class="sub3">R$ 1.170 · meta 74%</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="glare"></div>
+      </div>
+    </div>
+    <div class="base"></div>
+  </div>
+
+  <div class="float light" style="left:90px;top:520px;width:330px">
+    <div class="f-row">
+      <div class="f-ico" style="background:#25d366;border-radius:50%"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm0 1.8a7.2 7.2 0 1 1-3.7 13.4l-.3-.2-2.7.7.7-2.6-.2-.3A7.2 7.2 0 0 1 12 4.8zm-3 3.4c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3-1.6-.8c-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1-.3-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.3 0-.4.1-.5l.4-.4.2-.4v-.4l-.7-1.8c-.2-.5-.4-.4-.5-.4z"/></svg></div>
+      <div><div class="f-t">Lembrete enviado</div><div class="f-s" style="opacity:.55">“João, seu horário é hoje às 14:00”</div></div>
+    </div>
+  </div>
+  <div class="float" style="left:1310px;top:560px;width:210px;text-align:center">
+    <svg width="120" height="120" viewBox="0 0 120 120" style="margin:0 auto">
+      <circle cx="60" cy="60" r="48" stroke="rgba(255,255,255,.1)" stroke-width="12" fill="none"/>
+      <circle cx="60" cy="60" r="48" stroke="url(#ring)" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="301.6" stroke-dashoffset="42" transform="rotate(-90 60 60)"/>
+      <defs><linearGradient id="ring"><stop offset="0" stop-color="#8d1cff"/><stop offset="1" stop-color="#c08bff"/></linearGradient></defs>
+      <text x="60" y="68" text-anchor="middle" font-family="Unbounded" font-size="24" fill="#fff">86%</text>
+    </svg>
+    <div class="f-t" style="margin-top:10px">Ocupação da agenda</div>
+    <div class="f-s">3 cadeiras · hoje</div>
+  </div>
+</section>
+
+<!-- ================= SCENE 4 ================= -->
+<section class="scene" id="s4">
+  <div class="floor" style="bottom:90px;width:1200px;height:80px"></div>
+
+  <div class="browser" style="left:170px;top:120px;width:1000px;height:740px">
+    <div class="bbar">
+      <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+      <div class="url"><svg width="12" height="12" viewBox="0 0 24 24" fill="#6b6a75"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V7a3 3 0 0 0-6 0z"/></svg>busca · advogada previdenciária teresina</div>
+      <div style="width:52px"></div>
+    </div>
+    <div class="serp">
+      <div class="sbox"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b6a75" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>advogada previdenciária teresina<span style="margin-left:auto;color:#8d1cff;font-weight:600;font-size:13px">Buscar</span></div>
+      <div class="tabs"><b>Todos</b><span>Maps</span><span>Imagens</span><span>Notícias</span><span>Mais</span></div>
+      <div style="font-size:12px;color:#8d8c96;margin:0 0 14px 10px">Aproximadamente 184.000 resultados (0,38 segundos)</div>
+      <div class="res top">
+        <span class="rank">#1</span>
+        <div class="site"><div class="fav" style="background:#0f1524;color:#c8a46a;font-family:Fraunces">L</div><div>Layla Rocha Advocacia<small>https://laylarocha.adv.br</small></div></div>
+        <h5>Advogada Previdenciária em Teresina | Aposentadoria e INSS</h5>
+        <p>Especialista em aposentadorias, BPC/LOAS e revisões do INSS. Atendimento humanizado em todo o Brasil. ★★★★★ 4,9 · 320 avaliações · Fale pelo WhatsApp.</p>
+        <div class="links"><span>Aposentadoria por idade</span><span>BPC/LOAS</span><span>Revisão do INSS</span><span>Contato</span></div>
+      </div>
+      <div class="res dim">
+        <div class="site"><div class="fav" style="background:#e8e7ee;color:#6b6a75">P</div><div>Portal Previdência<small>https://portalprevidencia.com.br › guia</small></div></div>
+        <h5>Como pedir aposentadoria pelo INSS: guia completo 2026</h5>
+        <p>Veja o passo a passo para solicitar seu benefício, documentos necessários e prazos...</p>
+      </div>
+      <div class="res dim">
+        <div class="site"><div class="fav" style="background:#e8e7ee;color:#6b6a75">A</div><div>Advogados PI<small>https://advogadospi.com.br</small></div></div>
+        <h5>Lista de escritórios de advocacia no Piauí</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="float" style="left:1010px;top:250px;width:420px;padding:24px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div><div class="f-s" style="margin:0">Cliques orgânicos · 6 meses</div><div class="f-big" style="margin-top:8px">+248%</div></div>
+      <span style="font-size:12px;font-weight:600;padding:6px 10px;border-radius:99px;background:rgba(74,222,128,.14);color:#4ade80">↑ crescendo</span>
+    </div>
+    <svg width="372" height="150" viewBox="0 0 372 150" style="margin-top:16px">
+      <defs><linearGradient id="seoA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8d1cff" stop-opacity=".55"/><stop offset="1" stop-color="#8d1cff" stop-opacity="0"/></linearGradient></defs>
+      <g stroke="rgba(255,255,255,.07)"><line x1="0" y1="30" x2="372" y2="30"/><line x1="0" y1="75" x2="372" y2="75"/><line x1="0" y1="120" x2="372" y2="120"/></g>
+      <path d="M0 132 C40 128 60 124 90 118 S140 104 170 98 S220 84 250 64 S310 36 372 14 L372 150 L0 150Z" fill="url(#seoA)"/>
+      <path d="M0 132 C40 128 60 124 90 118 S140 104 170 98 S220 84 250 64 S310 36 372 14" fill="none" stroke="#b26bff" stroke-width="3"/>
+      <circle cx="372" cy="14" r="6" fill="#fff" stroke="#8d1cff" stroke-width="3"/>
+    </svg>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px">
+      <div style="background:rgba(255,255,255,.05);border-radius:14px;padding:12px"><div class="f-s" style="margin:0">Posição média</div><div style="font-size:20px;font-weight:600;margin-top:4px">1,6</div></div>
+      <div style="background:rgba(255,255,255,.05);border-radius:14px;padding:12px"><div class="f-s" style="margin:0">Impressões</div><div style="font-size:20px;font-weight:600;margin-top:4px">48,2 mil</div></div>
+      <div style="background:rgba(255,255,255,.05);border-radius:14px;padding:12px"><div class="f-s" style="margin:0">CTR</div><div style="font-size:20px;font-weight:600;margin-top:4px">9,8%</div></div>
+    </div>
+  </div>
+
+  <div class="float" style="left:1080px;top:640px;width:300px">
+    <div class="f-row">
+      <svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,.1)" stroke-width="7" fill="none"/><circle cx="32" cy="32" r="26" stroke="#4ade80" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="163.4" stroke-dashoffset="3.3" transform="rotate(-90 32 32)"/><text x="32" y="38" text-anchor="middle" font-family="Unbounded" font-size="16" fill="#fff">98</text></svg>
+      <div><div class="f-t">Performance</div><div class="f-s">Core Web Vitals aprovados</div></div>
+    </div>
+  </div>
+
+  <div class="float" style="left:90px;top:700px;width:300px">
+    <div class="f-t" style="margin-bottom:10px">Palavras-chave no top 3</div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-top:1px solid rgba(255,255,255,.08)"><span style="opacity:.75">aposentadoria teresina</span><b style="color:#4ade80">1º ↑4</b></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-top:1px solid rgba(255,255,255,.08)"><span style="opacity:.75">advogado inss piauí</span><b style="color:#4ade80">2º ↑7</b></div>
+  </div>
+</section>
+
+<script>
+  const n = new URLSearchParams(location.search).get("scene") || "1";
+  document.getElementById("s" + n).classList.add("on");
+</script>
+</body>
+</html>
