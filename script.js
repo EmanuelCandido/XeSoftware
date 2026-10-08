@@ -798,4 +798,19 @@
       })
       .finally(() => setBusy(false));
   });
+
+  /* ---------- Project previews: play only while on screen ---------- */
+  const previews = document.querySelectorAll("video[data-preview]");
+  if (previews.length && !reduceMotion && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          if (isIntersecting) target.play().catch(() => {});
+          else target.pause();
+        });
+      },
+      { threshold: 0.35 }
+    );
+    previews.forEach((v) => io.observe(v));
+  }
 })();

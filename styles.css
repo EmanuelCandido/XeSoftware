@@ -1580,7 +1580,6 @@ body.menu-open {
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   align-items: start;
-  margin-bottom: 100px;
 }
 
 .projects__col {
@@ -1615,6 +1614,12 @@ body.menu-open {
   background-position: center;
   transform: scale(1.001);
   transition: transform 0.9s var(--ease-out), filter 0.6s;
+}
+
+video.project__img {
+  display: block;
+  object-fit: cover;
+  background: var(--card);
 }
 
 .project:hover .project__img {
