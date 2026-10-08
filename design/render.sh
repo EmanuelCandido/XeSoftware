@@ -1,32 +1,28 @@
 #!/usr/bin/env bash
-# Renderiza as imagens da seção de serviços a partir de design/mockups.html.
-# Requisitos: servidor local na raiz do projeto (python -m http.server 5173), Microsoft Edge e Python com Pillow.
+# Gera as imagens da seção de serviços:
+#   1. renderiza cada interface "achatada" a partir de design/mockups.html (?screen=...)
+#   2. encaixa a interface em perspectiva na tela de uma foto real (design/composite.py)
+# Requisitos: servidor local na raiz (python -m http.server 5173), Microsoft Edge,
+# Python com Pillow, numpy e opencv-python-headless.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 EDGE="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
 [ -f "$EDGE" ] || EDGE="/c/Program Files/Microsoft/Edge/Application/msedge.exe"
 
-OUT=assets/img/services
-TMP=$(mktemp -d)
-mkdir -p "$OUT"
-names=(websites ecommerce sistemas seo)
+mkdir -p design/screens
+OUTDIR=$(cygpath -w "$PWD/design/screens")
 
-for i in 1 2 3 4; do
+render() { # nome largura altura
   "$EDGE" --headless=new --hide-scrollbars --force-device-scale-factor=2 \
-    --window-size=1600,1000 --virtual-time-budget=6000 \
-    --screenshot="$(cygpath -w "$TMP")\\s$i.png" \
-    "http://localhost:5173/design/mockups.html?scene=$i" >/dev/null 2>&1
-done
+    --window-size="$2,$3" --virtual-time-budget=6000 \
+    --screenshot="$OUTDIR\\$1.png" \
+    "http://localhost:5173/design/mockups.html?screen=$1" >/dev/null 2>&1
+}
 
-python - "$TMP" "$OUT" "${names[@]}" <<'PY'
-import sys
-from PIL import Image
-tmp, out, *names = sys.argv[1:]
-for i, name in enumerate(names, 1):
-    im = Image.open(f"{tmp}/s{i}.png").convert("RGB")
-    im.resize((2000, 1250), Image.LANCZOS).save(f"{out}/{name}.webp", "WEBP", quality=88, method=6)
-    im.resize((1000, 625), Image.LANCZOS).save(f"{out}/{name}-sm.webp", "WEBP", quality=84, method=6)
-    print(name, im.size)
-PY
-rm -rf "$TMP" 2>/dev/null || true
+render law 1180 826
+render shop 1280 800
+render dash 1350 800
+render seo 1280 800
+
+cd design && python composite.py
