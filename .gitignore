@@ -3,3 +3,6 @@
 Thumbs.db
 design/screens/
 design/photos/_detect_*
+
+# large source assets for the 3D renders
+design/devices/tex/*.exr

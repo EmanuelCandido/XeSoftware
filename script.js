@@ -267,7 +267,7 @@
     },
   };
   const SERVICE_IDS = Object.keys(SERVICES);
-  const IMG_V = "12";
+  const IMG_V = "15"; // keep in sync with the ?v= used in index.html (same URL = cached once)
   const serviceImg = (id, size = "") => `assets/img/services/${id}${size}.webp?v=${IMG_V}`;
   let openLightbox = () => {};
 
@@ -799,18 +799,38 @@
       .finally(() => setBusy(false));
   });
 
-  /* ---------- Project previews: play only while on screen ---------- */
+  /* ---------- Project previews: load when near, play only while on screen ---------- */
   const previews = document.querySelectorAll("video[data-preview]");
-  if (previews.length && !reduceMotion && "IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(({ target, isIntersecting }) => {
-          if (isIntersecting) target.play().catch(() => {});
-          else target.pause();
-        });
-      },
+  const loadPreview = (v) => {
+    if (v.dataset.loaded) return;
+    v.dataset.loaded = "1";
+    v.poster = v.dataset.poster;
+    v.querySelectorAll("source[data-src]").forEach((s) => (s.src = s.dataset.src));
+    v.load();
+  };
+  if (previews.length && "IntersectionObserver" in window) {
+    const near = new IntersectionObserver(
+      (entries) => entries.forEach(({ target, isIntersecting }) => {
+        if (!isIntersecting) return;
+        // with reduced motion only the still poster is shown
+        if (reduceMotion) target.poster = target.dataset.poster;
+        else loadPreview(target);
+        near.unobserve(target);
+      }),
+      { rootMargin: "400px 0px" }
+    );
+    const visible = new IntersectionObserver(
+      (entries) => entries.forEach(({ target, isIntersecting }) => {
+        if (isIntersecting) target.play().catch(() => {});
+        else target.pause();
+      }),
       { threshold: 0.35 }
     );
-    previews.forEach((v) => io.observe(v));
+    previews.forEach((v) => {
+      near.observe(v);
+      if (!reduceMotion) visible.observe(v);
+    });
+  } else {
+    previews.forEach((v) => (v.poster = v.dataset.poster));
   }
 })();
