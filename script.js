@@ -2,7 +2,7 @@
   "use strict";
 
   // Número que recebe os contatos do formulário (formato internacional, só dígitos).
-  const WHATSAPP_NUMBER = "5586999999999";
+  const WHATSAPP_NUMBER = "558694686380";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isDesktop = () => window.matchMedia("(min-width: 1025px)").matches;
@@ -74,11 +74,8 @@
     if (hero) hero.classList.add("is-loaded");
   }
 
-  /* ---------- Header, progress bar, hero parallax ---------- */
+  /* ---------- Header, hero parallax ---------- */
   const header = document.getElementById("header");
-  const progress = document.createElement("div");
-  progress.className = "progress";
-  document.body.prepend(progress);
 
   const heroContent = document.querySelector(".hero__content");
   const offsetCol = document.querySelector(".projects__col--offset");
@@ -87,9 +84,6 @@
 
   const onScroll = () => {
     const y = window.scrollY;
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-
-    progress.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
 
     header.classList.toggle("is-scrolled", y > 40);
     const menuOpen = document.body.classList.contains("menu-open");
@@ -272,7 +266,7 @@
     },
   };
   const SERVICE_IDS = Object.keys(SERVICES);
-  const IMG_V = "8";
+  const IMG_V = "10";
   const serviceImg = (id, size = "") => `assets/img/services/${id}${size}.webp?v=${IMG_V}`;
   let openLightbox = () => {};
 
