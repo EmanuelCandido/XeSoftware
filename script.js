@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  // Número que recebe os contatos do formulário (formato internacional, só dígitos).
-  const WHATSAPP_NUMBER = "558694686380";
+  // E-mail que recebe os contatos do formulário (envio via FormSubmit, sem servidor próprio).
+  const CONTACT_EMAIL = "xesoftware.com.br@gmail.com";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isDesktop = () => window.matchMedia("(min-width: 1025px)").matches;
@@ -266,7 +266,7 @@
     },
   };
   const SERVICE_IDS = Object.keys(SERVICES);
-  const IMG_V = "10";
+  const IMG_V = "11";
   const serviceImg = (id, size = "") => `assets/img/services/${id}${size}.webp?v=${IMG_V}`;
   let openLightbox = () => {};
 
@@ -741,13 +741,52 @@
     }
 
     const data = new FormData(form);
-    const msg =
-      `Olá, XE Software! Meu nome é ${data.get("nome")}.` +
-      `\nWhatsApp: ${data.get("whatsapp")}` +
-      (data.get("servico") ? `\nServiço: ${data.get("servico")}` : "");
+    if (data.get("_honey")) return; // bot
 
-    status.textContent = "Abrindo o WhatsApp...";
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
-    form.reset();
+    const nome = String(data.get("nome") || "").trim();
+    const whatsapp = String(data.get("whatsapp") || "").trim();
+    const servico = String(data.get("servico") || "").trim();
+    const btn = form.querySelector(".form__submit");
+
+    const setBusy = (busy) => {
+      btn.disabled = busy;
+      form.classList.toggle("is-sending", busy);
+    };
+
+    // Opens the visitor's e-mail app with everything filled in, if the online send fails
+    const mailtoFallback = () => {
+      const body = `Nome: ${nome}\nWhatsApp: ${whatsapp}\nServiço: ${servico || "—"}`;
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Novo contato pelo site — " + nome)}&body=${encodeURIComponent(body)}`;
+    };
+
+    setBusy(true);
+    status.className = "form__status";
+    status.textContent = "Enviando...";
+
+    fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        _subject: `Novo contato pelo site — ${nome}`,
+        _template: "table",
+        _captcha: "false",
+        Nome: nome,
+        WhatsApp: whatsapp,
+        Serviço: servico || "—",
+      }),
+    })
+      .then((r) => r.json().then((j) => ({ ok: r.ok, j })))
+      .then(({ ok, j }) => {
+        if (!ok || String(j.success) === "false") throw new Error(j.message || "falha");
+        status.classList.add("is-ok");
+        status.textContent = "Mensagem enviada! Entraremos em contato em breve.";
+        form.reset();
+      })
+      .catch(() => {
+        status.classList.add("is-error");
+        status.textContent = "Não foi possível enviar agora. Abrindo seu aplicativo de e-mail...";
+        setTimeout(mailtoFallback, 900);
+      })
+      .finally(() => setBusy(false));
   });
 })();
