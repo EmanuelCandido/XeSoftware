@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;700&family=Inter:wght@400;500&family=Unbounded:wght@300;400;500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
   <!-- Header -->
@@ -117,86 +117,90 @@
         <div class="svc" data-reveal>
           <div class="svc__list" role="tablist" aria-label="Serviços da XE Software" aria-orientation="vertical">
             <div class="svc__item is-active" data-service="websites">
-              <button class="svc__tab" type="button" role="tab" id="svc-tab-websites" aria-selected="true" aria-controls="svc-stage" tabindex="0">
-                <span class="svc__num">01.</span>
-                <span class="svc__title">Websites &amp; Landing Pages</span>
-                <span class="svc__arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-                <span class="svc__line" aria-hidden="true"><i></i></span>
-              </button>
+              <div class="svc__head">
+                <button class="svc__tab" type="button" role="tab" id="svc-tab-websites" aria-selected="true" aria-controls="svc-stage" tabindex="0">
+                  <span class="svc__num">01.</span>
+                  <span class="svc__title">Websites &amp; Landing Pages</span>
+                </button>
+                <button class="svc__arrow" type="button" data-details="websites" aria-label="Ver detalhes de Websites & Landing Pages" title="Ver detalhes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              </div>
+              <span class="svc__line" aria-hidden="true"><i></i></span>
               <div class="svc__body">
                 <div class="svc__body-inner">
-                  <picture class="svc__mobile-media">
-                    <img src="assets/img/services/websites-sm.webp" alt="Site de advocacia exibido em um iPad segurado na mão" width="1000" height="625" loading="lazy" />
-                  </picture>
+                  <button class="svc__mobile-media" type="button" data-zoom="websites" aria-label="Ampliar imagem">
+                    <img src="assets/img/services/websites-sm.webp?v=5" alt="Site de advocacia exibido em um iPad segurado na mão" width="1000" height="625" loading="lazy" />
+                  </button>
                   <p class="svc__desc">Sites e landing pages rápidos, bonitos e pensados para transformar visitas em contatos e pedidos de orçamento.</p>
                   <div class="svc__meta">
                     <span class="svc__chip">A partir de R$ 1.200</span>
                     <span class="svc__chip">1–2 semanas</span>
                   </div>
-                  <button class="svc__more" type="button" data-details="websites">Ver detalhes <span aria-hidden="true">→</span></button>
                 </div>
               </div>
             </div>
             <div class="svc__item" data-service="ecommerce">
-              <button class="svc__tab" type="button" role="tab" id="svc-tab-ecommerce" aria-selected="false" aria-controls="svc-stage" tabindex="-1">
-                <span class="svc__num">02.</span>
-                <span class="svc__title">E-commerce</span>
-                <span class="svc__arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-                <span class="svc__line" aria-hidden="true"><i></i></span>
-              </button>
+              <div class="svc__head">
+                <button class="svc__tab" type="button" role="tab" id="svc-tab-ecommerce" aria-selected="false" aria-controls="svc-stage" tabindex="-1">
+                  <span class="svc__num">02.</span>
+                  <span class="svc__title">E-commerce</span>
+                </button>
+                <button class="svc__arrow" type="button" data-details="ecommerce" aria-label="Ver detalhes de E-commerce" title="Ver detalhes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              </div>
+              <span class="svc__line" aria-hidden="true"><i></i></span>
               <div class="svc__body">
                 <div class="svc__body-inner">
-                  <picture class="svc__mobile-media">
-                    <img src="assets/img/services/ecommerce-sm.webp" alt="Loja virtual de pet shop exibida em um notebook sobre a mesa" width="1000" height="625" loading="lazy" />
-                  </picture>
+                  <button class="svc__mobile-media" type="button" data-zoom="ecommerce" aria-label="Ampliar imagem">
+                    <img src="assets/img/services/ecommerce-sm.webp?v=5" alt="Loja virtual de pet shop exibida em um notebook sobre a mesa" width="1000" height="625" loading="lazy" />
+                  </button>
                   <p class="svc__desc">Lojas virtuais para vender online com catálogo, carrinho, Pix e cartão — e um painel simples de administrar.</p>
                   <div class="svc__meta">
                     <span class="svc__chip">A partir de R$ 3.500</span>
                     <span class="svc__chip">4–5 semanas</span>
                   </div>
-                  <button class="svc__more" type="button" data-details="ecommerce">Ver detalhes <span aria-hidden="true">→</span></button>
                 </div>
               </div>
             </div>
             <div class="svc__item" data-service="sistemas">
-              <button class="svc__tab" type="button" role="tab" id="svc-tab-sistemas" aria-selected="false" aria-controls="svc-stage" tabindex="-1">
-                <span class="svc__num">03.</span>
-                <span class="svc__title">Sistemas Sob Medida</span>
-                <span class="svc__arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-                <span class="svc__line" aria-hidden="true"><i></i></span>
-              </button>
+              <div class="svc__head">
+                <button class="svc__tab" type="button" role="tab" id="svc-tab-sistemas" aria-selected="false" aria-controls="svc-stage" tabindex="-1">
+                  <span class="svc__num">03.</span>
+                  <span class="svc__title">Sistemas Sob Medida</span>
+                </button>
+                <button class="svc__arrow" type="button" data-details="sistemas" aria-label="Ver detalhes de Sistemas Sob Medida" title="Ver detalhes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              </div>
+              <span class="svc__line" aria-hidden="true"><i></i></span>
               <div class="svc__body">
                 <div class="svc__body-inner">
-                  <picture class="svc__mobile-media">
-                    <img src="assets/img/services/sistemas-sm.webp" alt="Painel de gestão de barbearia exibido em um iMac" width="1000" height="625" loading="lazy" />
-                  </picture>
+                  <button class="svc__mobile-media" type="button" data-zoom="sistemas" aria-label="Ampliar imagem">
+                    <img src="assets/img/services/sistemas-sm.webp?v=5" alt="Painel de gestão de barbearia exibido em um iMac" width="1000" height="625" loading="lazy" />
+                  </button>
                   <p class="svc__desc">Sistemas feitos para o jeito como o seu negócio funciona: menos planilhas, mais controle e processos automatizados.</p>
                   <div class="svc__meta">
                     <span class="svc__chip">Sob consulta</span>
                     <span class="svc__chip">4–8 semanas</span>
                   </div>
-                  <button class="svc__more" type="button" data-details="sistemas">Ver detalhes <span aria-hidden="true">→</span></button>
                 </div>
               </div>
             </div>
             <div class="svc__item" data-service="seo">
-              <button class="svc__tab" type="button" role="tab" id="svc-tab-seo" aria-selected="false" aria-controls="svc-stage" tabindex="-1">
-                <span class="svc__num">04.</span>
-                <span class="svc__title">SEO &amp; Performance</span>
-                <span class="svc__arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-                <span class="svc__line" aria-hidden="true"><i></i></span>
-              </button>
+              <div class="svc__head">
+                <button class="svc__tab" type="button" role="tab" id="svc-tab-seo" aria-selected="false" aria-controls="svc-stage" tabindex="-1">
+                  <span class="svc__num">04.</span>
+                  <span class="svc__title">SEO &amp; Performance</span>
+                </button>
+                <button class="svc__arrow" type="button" data-details="seo" aria-label="Ver detalhes de SEO & Performance" title="Ver detalhes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              </div>
+              <span class="svc__line" aria-hidden="true"><i></i></span>
               <div class="svc__body">
                 <div class="svc__body-inner">
-                  <picture class="svc__mobile-media">
-                    <img src="assets/img/services/seo-sm.webp" alt="Resultado de busca com o site em primeiro lugar exibido em um notebook" width="1000" height="625" loading="lazy" />
-                  </picture>
+                  <button class="svc__mobile-media" type="button" data-zoom="seo" aria-label="Ampliar imagem">
+                    <img src="assets/img/services/seo-sm.webp?v=5" alt="Resultado de busca com o site em primeiro lugar exibido em um notebook" width="1000" height="625" loading="lazy" />
+                  </button>
                   <p class="svc__desc">Otimizamos estrutura, conteúdo e velocidade do seu site para aparecer no topo do Google e ser encontrado por quem procura você.</p>
                   <div class="svc__meta">
                     <span class="svc__chip">Sob consulta</span>
                     <span class="svc__chip">Plano mensal</span>
                   </div>
-                  <button class="svc__more" type="button" data-details="seo">Ver detalhes <span aria-hidden="true">→</span></button>
                 </div>
               </div>
             </div>
@@ -205,18 +209,20 @@
           <div class="svc__stage" id="svc-stage" role="tabpanel" aria-live="polite">
             <div class="svc__frame">
               <div class="svc__slide is-active" data-service="websites">
-                <img src="assets/img/services/websites.webp" srcset="assets/img/services/websites-sm.webp 1000w, assets/img/services/websites.webp 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Site de advocacia exibido em um iPad segurado na mão" width="2000" height="1250" fetchpriority="high" />
+                <img src="assets/img/services/websites.webp?v=5" srcset="assets/img/services/websites-sm.webp?v=5 1000w, assets/img/services/websites.webp?v=5 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Site de advocacia exibido em um iPad segurado na mão" width="2000" height="1250" fetchpriority="high" />
               </div>
               <div class="svc__slide" data-service="ecommerce">
-                <img src="assets/img/services/ecommerce.webp" srcset="assets/img/services/ecommerce-sm.webp 1000w, assets/img/services/ecommerce.webp 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Loja virtual de pet shop exibida em um notebook sobre a mesa" width="2000" height="1250" loading="lazy" />
+                <img src="assets/img/services/ecommerce.webp?v=5" srcset="assets/img/services/ecommerce-sm.webp?v=5 1000w, assets/img/services/ecommerce.webp?v=5 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Loja virtual de pet shop exibida em um notebook sobre a mesa" width="2000" height="1250" loading="lazy" />
               </div>
               <div class="svc__slide" data-service="sistemas">
-                <img src="assets/img/services/sistemas.webp" srcset="assets/img/services/sistemas-sm.webp 1000w, assets/img/services/sistemas.webp 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Painel de gestão de barbearia exibido em um iMac" width="2000" height="1250" loading="lazy" />
+                <img src="assets/img/services/sistemas.webp?v=5" srcset="assets/img/services/sistemas-sm.webp?v=5 1000w, assets/img/services/sistemas.webp?v=5 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Painel de gestão de barbearia exibido em um iMac" width="2000" height="1250" loading="lazy" />
               </div>
               <div class="svc__slide" data-service="seo">
-                <img src="assets/img/services/seo.webp" srcset="assets/img/services/seo-sm.webp 1000w, assets/img/services/seo.webp 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Resultado de busca com o site em primeiro lugar exibido em um notebook" width="2000" height="1250" loading="lazy" />
+                <img src="assets/img/services/seo.webp?v=5" srcset="assets/img/services/seo-sm.webp?v=5 1000w, assets/img/services/seo.webp?v=5 2000w" sizes="(max-width: 1440px) 55vw, 800px" alt="Resultado de busca com o site em primeiro lugar exibido em um notebook" width="2000" height="1250" loading="lazy" />
               </div>
+              <button class="svc__zoom-hit" type="button" data-zoom-current aria-label="Ampliar imagem"></button>
               <div class="svc__hud">
+                <span class="svc__zoom-hint" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/></svg>Clique para ampliar</span>
                 <button class="svc__hud-btn" type="button" data-details-current>Ver detalhes <span aria-hidden="true">↗</span></button>
               </div>
             </div>
@@ -396,17 +402,36 @@
 
   <!-- Detalhes do serviço -->
   <dialog class="drawer" id="svc-drawer" aria-labelledby="drawer-title">
+    <button class="drawer__close" type="button" aria-label="Fechar detalhes" data-close>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
     <div class="drawer__inner">
-      <div class="drawer__top">
+      <div class="drawer__media" id="drawer-media"></div>
+      <div class="drawer__info">
         <span class="tag" id="drawer-num">Serviço 01</span>
-        <button class="drawer__close" type="button" aria-label="Fechar detalhes" data-close>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
+        <div class="drawer__content" id="drawer-content"></div>
       </div>
-      <div class="drawer__content" id="drawer-content"></div>
     </div>
   </dialog>
 
-  <script src="script.js?v=4"></script>
+  <!-- Visualizador de imagem com zoom -->
+  <dialog class="lightbox" id="lightbox" aria-label="Imagem ampliada">
+    <div class="lightbox__stage" id="lightbox-stage">
+      <img class="lightbox__img" id="lightbox-img" alt="" draggable="false" />
+    </div>
+    <button class="lightbox__close" type="button" data-lb="close" aria-label="Fechar imagem">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="lightbox__bar">
+      <button type="button" data-lb="out" aria-label="Diminuir zoom">−</button>
+      <span class="lightbox__pct" id="lightbox-pct">100%</span>
+      <button type="button" data-lb="in" aria-label="Aumentar zoom">+</button>
+      <span class="lightbox__sep"></span>
+      <button type="button" data-lb="reset" class="lightbox__fit">Ajustar</button>
+    </div>
+    <p class="lightbox__hint">Clique ou role para dar zoom · arraste para mover</p>
+  </dialog>
+
+  <script src="script.js?v=5"></script>
 </body>
 </html>

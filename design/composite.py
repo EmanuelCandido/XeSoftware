@@ -11,6 +11,9 @@ from PIL import Image
 from detect_screens import SCENES, detect
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+# Trabalha em 2x: a foto é ampliada e a interface é encaixada em alta resolução,
+# para que a versão "-xl" (usada no zoom) mostre o conteúdo da tela com nitidez.
+SCALE = 2
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, "assets", "img", "services")
 
@@ -38,7 +41,8 @@ def rounded_mask(w, h, r):
 
 
 def composite(service, photo_name, screen_name, radius, expand, zoom):
-    photo = cv2.imread(os.path.join(HERE, "photos", photo_name)).astype(np.float32) / 255
+    photo = cv2.imread(os.path.join(HERE, "photos", photo_name))
+    photo = cv2.resize(photo, None, fx=SCALE, fy=SCALE, interpolation=cv2.INTER_LANCZOS4).astype(np.float32) / 255
     screen = cv2.imread(os.path.join(HERE, "screens", screen_name)).astype(np.float32) / 255
     H, W = photo.shape[:2]
     sh, sw = screen.shape[:2]
@@ -46,7 +50,7 @@ def composite(service, photo_name, screen_name, radius, expand, zoom):
     quad = detect(photo_name, *SCENES[photo_name])
     ex, ey = expand if isinstance(expand, tuple) else (expand, expand)
     center = quad.mean(0)
-    quad = center + (quad - center) * np.float32([ex, ey])
+    quad = (center + (quad - center) * np.float32([ex, ey])) * SCALE
 
     src = np.float32([[0, 0], [sw, 0], [sw, sh], [0, sh]])
     M = cv2.getPerspectiveTransform(src, quad)
@@ -59,7 +63,7 @@ def composite(service, photo_name, screen_name, radius, expand, zoom):
     warped = cv2.warpPerspective(screen, M, (W, H), flags=cv2.INTER_AREA, borderMode=cv2.BORDER_CONSTANT)
     mask = rounded_mask(sw, sh, radius).astype(np.float32) / 255
     wmask = cv2.warpPerspective(mask, M, (W, H), flags=cv2.INTER_LINEAR)
-    wmask = cv2.GaussianBlur(wmask, (3, 3), 0)[..., None]
+    wmask = cv2.GaussianBlur(wmask, (5, 5), 0)[..., None]
 
     # Reflexo diagonal sutil sobre o vidro
     yy, xx = np.mgrid[0:sh, 0:sw].astype(np.float32)
@@ -89,6 +93,7 @@ def composite(service, photo_name, screen_name, radius, expand, zoom):
     os.makedirs(OUT, exist_ok=True)
     img.resize((2000, 1250), Image.LANCZOS).save(os.path.join(OUT, f"{service}.webp"), "WEBP", quality=88, method=6)
     img.resize((1000, 625), Image.LANCZOS).save(os.path.join(OUT, f"{service}-sm.webp"), "WEBP", quality=84, method=6)
+    img.resize((3600, 2250), Image.LANCZOS).save(os.path.join(OUT, f"{service}-xl.webp"), "WEBP", quality=86, method=6)
     print(service, "ok", img.size)
 
 

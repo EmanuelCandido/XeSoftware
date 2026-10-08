@@ -280,6 +280,9 @@
     },
   };
   const SERVICE_IDS = Object.keys(SERVICES);
+  const IMG_V = "5";
+  const serviceImg = (id, size = "") => `assets/img/services/${id}${size}.webp?v=${IMG_V}`;
+  let openLightbox = () => {};
 
   const svc = document.querySelector(".svc");
   let openDrawer = () => {};
@@ -320,7 +323,7 @@
 
     tabs.forEach((tab, i) => {
       tab.addEventListener("click", () => selectService(i));
-      tab.addEventListener("pointerenter", (e) => {
+      tab.parentElement.addEventListener("pointerenter", (e) => {
         if (e.pointerType === "mouse" && !isStacked()) show(i);
       });
       tab.addEventListener("keydown", (e) => {
@@ -356,7 +359,19 @@
       openDrawer(SERVICE_IDS[current], e.currentTarget);
     });
     svc.querySelectorAll("[data-details]").forEach((btn) => {
-      btn.addEventListener("click", () => openDrawer(btn.dataset.details, btn));
+      btn.addEventListener("click", () => {
+        const i = SERVICE_IDS.indexOf(btn.dataset.details);
+        if (i !== current) show(i);
+        openDrawer(btn.dataset.details, btn);
+      });
+    });
+
+    svc.querySelector("[data-zoom-current]").addEventListener("click", (e) => {
+      const id = SERVICE_IDS[current];
+      openLightbox(serviceImg(id), slides[current].querySelector("img").alt, e.currentTarget);
+    });
+    svc.querySelectorAll("[data-zoom]").forEach((btn) => {
+      btn.addEventListener("click", () => openLightbox(serviceImg(btn.dataset.zoom), btn.querySelector("img").alt, btn));
     });
   }
 
@@ -372,6 +387,8 @@
   const drawer = document.getElementById("svc-drawer");
   if (drawer && typeof drawer.showModal === "function") {
     const content = document.getElementById("drawer-content");
+    const media = document.getElementById("drawer-media");
+    const info = drawer.querySelector(".drawer__info");
     const numEl = document.getElementById("drawer-num");
     let returnFocus = null;
     let closing = false;
@@ -381,10 +398,16 @@
     const render = (id) => {
       const s = SERVICES[id];
       numEl.textContent = `Serviço ${s.num}`;
+      const alt = document.querySelector(`.svc__slide[data-service="${id}"] img`)?.alt || s.title;
+      media.innerHTML = `
+        <button type="button" class="zoomable" data-zoom-drawer="${id}" aria-label="Ampliar imagem">
+          <img src="${serviceImg(id)}" alt="${esc(alt)}" width="2000" height="1250" />
+          <span class="zoomable__chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/></svg>Ampliar</span>
+        </button>
+        <p class="drawer__media-note">Clique na imagem para ampliar e ver os detalhes</p>`;
       content.innerHTML = `
         <h2 class="drawer__title" id="drawer-title">${esc(s.title)}</h2>
         <p class="drawer__lead">${esc(s.lead)}</p>
-        <div class="drawer__img"><img src="assets/img/services/${id}.webp" alt="" width="2000" height="1250" /></div>
         <div class="drawer__stats">
           <div class="drawer__stat"><span>Investimento</span><b>${esc(s.price)}</b></div>
           <div class="drawer__stat"><span>Prazo</span><b>${esc(s.time)}</b></div>
@@ -403,8 +426,10 @@
         <div class="drawer__others">${SERVICE_IDS.filter((o) => o !== id)
           .map((o) => `<button type="button" class="drawer__other" data-switch="${o}">${esc(SERVICES[o].title)}</button>`)
           .join("")}</div>`;
+      [...media.children, ...info.children].forEach((el, i) => el.style.setProperty("--i", i));
       [...content.children].forEach((el, i) => el.style.setProperty("--i", i));
       drawer.querySelector(".drawer__inner").scrollTop = 0;
+      info.scrollTop = 0;
     };
 
     const close = () => {
@@ -443,6 +468,8 @@
     drawer.addEventListener("click", (e) => {
       if (e.target === drawer) close(); // backdrop
       if (e.target.closest("[data-close]")) close();
+      const zoom = e.target.closest("[data-zoom-drawer]");
+      if (zoom) openLightbox(serviceImg(zoom.dataset.zoomDrawer), zoom.querySelector("img").alt, zoom);
       const sw = e.target.closest("[data-switch]");
       if (sw) {
         openDrawer(sw.dataset.switch, returnFocus);
@@ -508,6 +535,183 @@
       };
     });
   });
+
+
+  /* ---------- Image lightbox: click / wheel / pinch to zoom, drag to pan ---------- */
+  const lb = document.getElementById("lightbox");
+  if (lb && typeof lb.showModal === "function") {
+    const stageEl = document.getElementById("lightbox-stage");
+    const img = document.getElementById("lightbox-img");
+    const pct = document.getElementById("lightbox-pct");
+    const MIN = 1;
+    const MAX = 5;
+    let s = 1;
+    let tx = 0;
+    let ty = 0;
+    let lbReturn = null;
+    const pointers = new Map();
+    let drag = null;
+    let pinch = null;
+    let moved = false;
+
+    const apply = () => {
+      // keep the image covering the viewport edges when zoomed (no empty gaps)
+      const r = stageEl.getBoundingClientRect();
+      const w = img.offsetWidth * s;
+      const h = img.offsetHeight * s;
+      const mx = Math.max(0, (w - r.width) / 2 + 40);
+      const my = Math.max(0, (h - r.height) / 2 + 40);
+      tx = Math.min(mx, Math.max(-mx, tx));
+      ty = Math.min(my, Math.max(-my, ty));
+      if (s <= 1.001) tx = ty = 0;
+      img.style.setProperty("--s", s);
+      img.style.setProperty("--tx", `${tx}px`);
+      img.style.setProperty("--ty", `${ty}px`);
+      pct.textContent = `${Math.round(s * 100)}%`;
+      stageEl.classList.toggle("is-zoomed", s > 1.001);
+    };
+
+    // Zoom keeping the point (cx, cy) — in viewport px — fixed under the cursor
+    const zoomTo = (next, cx, cy) => {
+      next = Math.min(MAX, Math.max(MIN, next));
+      const r = stageEl.getBoundingClientRect();
+      const px = (cx ?? r.left + r.width / 2) - (r.left + r.width / 2);
+      const py = (cy ?? r.top + r.height / 2) - (r.top + r.height / 2);
+      tx = px - ((px - tx) * next) / s;
+      ty = py - ((py - ty) * next) / s;
+      s = next;
+      apply();
+    };
+
+    const reset = () => {
+      s = 1;
+      tx = ty = 0;
+      apply();
+    };
+
+    openLightbox = (src, alt, trigger) => {
+      lbReturn = trigger || null;
+      img.src = src;
+      img.alt = alt || "";
+      // Shows the regular image at once, then swaps in the high-resolution version for zooming
+      const hi = new Image();
+      const hiSrc = src.replace(".webp", "-xl.webp");
+      hi.onload = () => {
+        if (lb.open && img.src.endsWith(src.split("/").pop())) img.src = hiSrc;
+      };
+      hi.src = hiSrc;
+      reset();
+      lb.showModal();
+      requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add("is-open")));
+    };
+
+    const closeLb = () => {
+      if (!lb.open) return;
+      lb.classList.remove("is-open");
+      const done = () => {
+        lb.close();
+        if (lbReturn) lbReturn.focus({ preventScroll: true });
+      };
+      if (reduceMotion || document.hidden) done();
+      else setTimeout(done, 300);
+    };
+
+    lb.addEventListener("cancel", (e) => {
+      e.preventDefault();
+      closeLb();
+    });
+
+    lb.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-lb]");
+      if (!btn) return;
+      const action = btn.dataset.lb;
+      if (action === "close") closeLb();
+      if (action === "in") zoomTo(s * 1.5);
+      if (action === "out") zoomTo(s / 1.5);
+      if (action === "reset") reset();
+    });
+
+    lb.addEventListener("keydown", (e) => {
+      if (e.key === "+" || e.key === "=") zoomTo(s * 1.5);
+      if (e.key === "-") zoomTo(s / 1.5);
+      if (e.key === "0") reset();
+    });
+
+    stageEl.addEventListener(
+      "wheel",
+      (e) => {
+        e.preventDefault();
+        zoomTo(s * Math.exp(-e.deltaY * 0.0018), e.clientX, e.clientY);
+      },
+      { passive: false }
+    );
+
+    stageEl.addEventListener("pointerdown", (e) => {
+      stageEl.setPointerCapture(e.pointerId);
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      moved = false;
+      if (pointers.size === 2) {
+        const [a, b] = [...pointers.values()];
+        pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), s };
+        drag = null;
+        stageEl.classList.add("is-pinching");
+      } else {
+        drag = { x: e.clientX, y: e.clientY, tx, ty };
+      }
+    });
+
+    stageEl.addEventListener("pointermove", (e) => {
+      if (!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pinch && pointers.size === 2) {
+        const [a, b] = [...pointers.values()];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        moved = true;
+        zoomTo((pinch.s * d) / pinch.d, (a.x + b.x) / 2, (a.y + b.y) / 2);
+        return;
+      }
+      if (drag) {
+        const dx = e.clientX - drag.x;
+        const dy = e.clientY - drag.y;
+        if (!moved && Math.hypot(dx, dy) < 4) return;
+        moved = true;
+        if (s > 1.001) {
+          stageEl.classList.add("is-dragging");
+          tx = drag.tx + dx;
+          ty = drag.ty + dy;
+          apply();
+        }
+      }
+    });
+
+    const endPointer = (e) => {
+      if (!pointers.has(e.pointerId)) return;
+      pointers.delete(e.pointerId);
+      stageEl.classList.remove("is-dragging");
+      if (pointers.size < 2) {
+        pinch = null;
+        stageEl.classList.remove("is-pinching");
+      }
+      if (e.type === "pointerup" && !moved && pointers.size === 0) {
+        // Click: zoom in where clicked, or back to fit when already zoomed.
+        // A click outside the image while not zoomed closes the viewer.
+        const r = img.getBoundingClientRect();
+        const onImg = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+        if (s > 1.001) reset();
+        else if (onImg) zoomTo(2.5, e.clientX, e.clientY);
+        else closeLb();
+      }
+      if (pointers.size === 1) {
+        const [p] = [...pointers.values()];
+        drag = { x: p.x, y: p.y, tx, ty };
+      } else if (pointers.size === 0) {
+        drag = null;
+      }
+    };
+    stageEl.addEventListener("pointerup", endPointer);
+    stageEl.addEventListener("pointercancel", endPointer);
+    window.addEventListener("resize", () => lb.open && apply());
+  }
 
   /* ---------- Contact form -> WhatsApp ---------- */
   const form = document.getElementById("contact-form");
