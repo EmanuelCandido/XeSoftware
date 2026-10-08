@@ -280,7 +280,7 @@
     },
   };
   const SERVICE_IDS = Object.keys(SERVICES);
-  const IMG_V = "5";
+  const IMG_V = "6";
   const serviceImg = (id, size = "") => `assets/img/services/${id}${size}.webp?v=${IMG_V}`;
   let openLightbox = () => {};
 
@@ -402,9 +402,7 @@
       media.innerHTML = `
         <button type="button" class="zoomable" data-zoom-drawer="${id}" aria-label="Ampliar imagem">
           <img src="${serviceImg(id)}" alt="${esc(alt)}" width="2000" height="1250" />
-          <span class="zoomable__chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/></svg>Ampliar</span>
-        </button>
-        <p class="drawer__media-note">Clique na imagem para ampliar e ver os detalhes</p>`;
+</button>`;
       content.innerHTML = `
         <h2 class="drawer__title" id="drawer-title">${esc(s.title)}</h2>
         <p class="drawer__lead">${esc(s.lead)}</p>
