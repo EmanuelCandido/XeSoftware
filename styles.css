@@ -246,14 +246,13 @@ button:focus-visible .roll__inner {
 }
 
 .header__logo img {
-  width: 60px;
+  width: 64px;
   height: 31px;
-  transition: filter 0.4s;
+  transition: transform 0.5s var(--ease-spring);
 }
 
-.header.is-scrolled .header__logo img,
-body.menu-open .header__logo img {
-  filter: invert(1);
+.header__logo:hover img {
+  transform: scale(1.06);
 }
 
 .header__cta {
@@ -1581,7 +1580,7 @@ body.menu-open {
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   align-items: start;
-  margin-bottom: 60px;
+  margin-bottom: 100px;
 }
 
 .projects__col {
@@ -1798,6 +1797,84 @@ body.menu-open {
   height: 60px;
 }
 
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field__opt {
+  font-style: normal;
+  font-weight: 500;
+  text-transform: none;
+  color: var(--white-60);
+}
+
+.select {
+  position: relative;
+  display: block;
+}
+
+.select::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--white-60);
+  border-bottom: 2px solid var(--white-60);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+  transition: transform 0.4s var(--ease-out), border-color 0.3s;
+}
+
+.select:focus-within::after {
+  border-color: var(--purple);
+  transform: translateY(-30%) rotate(-135deg);
+}
+
+.field select {
+  width: 100%;
+  height: 60px;
+  padding: 12px 44px 12px 14px;
+  border-radius: 20px;
+  border: 0.8px solid rgba(136, 136, 136, 0.1);
+  background: rgba(187, 187, 187, 0.15);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+.field select:invalid,
+.field select:has(option[value=""]:checked) {
+  color: #999;
+  font-weight: 400;
+}
+
+.field select:hover {
+  background: rgba(187, 187, 187, 0.2);
+}
+
+.field select:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 4px rgba(141, 28, 255, 0.18);
+}
+
+.field select option {
+  background: #1d1b22;
+  color: #fff;
+}
+
+.field.is-invalid select {
+  border-color: #ff5c7a;
+}
+
 .field textarea {
   min-height: 127px;
   line-height: 19.2px;
@@ -1994,6 +2071,7 @@ body.menu-open {
 }
 
 .social__icon {
+  position: relative;
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -2001,28 +2079,43 @@ body.menu-open {
   height: 56px;
   border-radius: 18px;
   border: 0.8px solid rgba(124, 135, 120, 0.39);
-  transition: background-color 0.4s, border-color 0.4s, transform 0.5s var(--ease-spring);
+  overflow: hidden;
+  isolation: isolate;
+  transition: border-color 0.6s var(--ease-out), transform 0.7s var(--ease-spring), box-shadow 0.7s var(--ease-out);
+}
+
+/* Instagram brand gradient lives on its own layer so it can fade (and drift) in */
+.social__icon::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  z-index: -1;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  opacity: 0;
+  transform: scale(0.8) rotate(-25deg);
+  transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out);
 }
 
 .social__icon img {
   width: 22px;
   height: 22px;
+  transition: filter 0.6s var(--ease-out), transform 0.7s var(--ease-spring);
 }
 
 .social:hover .social__icon {
-  /* Instagram brand gradient */
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
   border-color: transparent;
   box-shadow: 0 10px 30px -8px rgba(214, 36, 159, 0.65);
   transform: rotate(-8deg) scale(1.06);
 }
 
-.social:hover .social__icon img {
-  filter: brightness(0) invert(1);
+.social:hover .social__icon::before {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
 }
 
-.social__icon img {
-  transition: filter 0.3s;
+.social:hover .social__icon img {
+  filter: brightness(0) invert(1);
+  transform: scale(1.08);
 }
 
 .social__text {
@@ -2044,6 +2137,7 @@ body.menu-open {
 }
 
 .social__go {
+  position: relative;
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -2053,13 +2147,28 @@ body.menu-open {
   border-radius: 50%;
   background: #f5f5f5;
   color: var(--ink);
-  transition: background-color 0.4s, color 0.4s, transform 0.5s var(--ease-spring);
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.5s var(--ease-out), transform 0.7s var(--ease-spring);
+}
+
+.social__go::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(45deg, #f09433, #dc2743 55%, #bc1888);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
 }
 
 .social:hover .social__go {
-  background: linear-gradient(45deg, #f09433, #dc2743 55%, #bc1888);
   color: var(--white);
   transform: rotate(45deg);
+}
+
+.social:hover .social__go::before {
+  opacity: 1;
 }
 
 /* Giant brand wordmark */
@@ -2303,6 +2412,11 @@ body.menu-open {
 }
 
 @media (max-width: 767px) {
+  .field-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
   :root {
     --gutter: 12px;
   }

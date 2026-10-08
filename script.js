@@ -99,7 +99,8 @@
       if (isDesktop()) {
         const rect = offsetCol.parentElement.getBoundingClientRect();
         const center = rect.top + rect.height / 2 - window.innerHeight / 2;
-        offsetCol.style.transform = `translate3d(0, ${center * -0.08}px, 0)`;
+        // only ever moves up, so the column never overlaps the "ver todos" button below it
+        offsetCol.style.transform = `translate3d(0, ${Math.min(0, center * -0.08)}px, 0)`;
       } else {
         offsetCol.style.transform = "";
       }
@@ -266,7 +267,7 @@
     },
   };
   const SERVICE_IDS = Object.keys(SERVICES);
-  const IMG_V = "11";
+  const IMG_V = "12";
   const serviceImg = (id, size = "") => `assets/img/services/${id}${size}.webp?v=${IMG_V}`;
   let openLightbox = () => {};
 
@@ -474,8 +475,12 @@
       const cta = e.target.closest("[data-cta]");
       if (cta) {
         e.preventDefault();
-        const field = document.querySelector('#contact-form textarea[name="servico"]');
-        if (field) field.value = SERVICES[cta.dataset.cta].title;
+        const field = document.querySelector('#contact-form select[name="tipo"]');
+        const TIPO = { websites: "Landing Page", ecommerce: "Sites/E-commerce", sistemas: "Sistema sob medida", seo: "SEO & Performance" };
+        if (field) {
+          field.value = TIPO[cta.dataset.cta];
+          field.closest(".field").classList.remove("is-invalid");
+        }
         returnFocus = null;
         close();
         setTimeout(() => {
@@ -732,7 +737,7 @@
     });
 
     if (!valid) {
-      status.textContent = "Preencha seu nome e WhatsApp para continuar.";
+      status.textContent = "Preencha nome, WhatsApp e tipo de serviço para continuar.";
       form.animate(
         { transform: ["translateX(0)", "translateX(-8px)", "translateX(8px)", "translateX(-4px)", "translateX(0)"] },
         { duration: 400 }
@@ -745,7 +750,9 @@
 
     const nome = String(data.get("nome") || "").trim();
     const whatsapp = String(data.get("whatsapp") || "").trim();
-    const servico = String(data.get("servico") || "").trim();
+    const tipo = String(data.get("tipo") || "").trim();
+    const orcamento = String(data.get("orcamento") || "").trim();
+    const descricao = String(data.get("descricao") || "").trim();
     const btn = form.querySelector(".form__submit");
 
     const setBusy = (busy) => {
@@ -755,7 +762,7 @@
 
     // Opens the visitor's e-mail app with everything filled in, if the online send fails
     const mailtoFallback = () => {
-      const body = `Nome: ${nome}\nWhatsApp: ${whatsapp}\nServiço: ${servico || "—"}`;
+      const body = `Nome: ${nome}\nWhatsApp: ${whatsapp}\nServiço: ${tipo}\nOrçamento: ${orcamento || "—"}\nDescrição: ${descricao || "—"}`;
       window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Novo contato pelo site — " + nome)}&body=${encodeURIComponent(body)}`;
     };
 
@@ -772,7 +779,9 @@
         _captcha: "false",
         Nome: nome,
         WhatsApp: whatsapp,
-        Serviço: servico || "—",
+        Serviço: tipo,
+        Orçamento: orcamento || "—",
+        Descrição: descricao || "—",
       }),
     })
       .then((r) => r.json().then((j) => ({ ok: r.ok, j })))
