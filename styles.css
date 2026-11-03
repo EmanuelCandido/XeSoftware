@@ -1982,8 +1982,8 @@ video.project__img {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  width: 767px;
-  max-width: 60%;
+  flex: 1;
+  min-width: 0;
 }
 
 .info__card--wide {
@@ -2024,6 +2024,7 @@ video.project__img {
   display: flex;
   gap: 73px;
   min-width: 294px;
+  padding: 10px 20px 0 0;
 }
 
 .info__menu {
@@ -2195,9 +2196,6 @@ video.project__img {
     line-height: 88px;
   }
 
-  .info__contacts {
-    max-width: 55%;
-  }
 }
 
 @media (max-width: 1024px) {
