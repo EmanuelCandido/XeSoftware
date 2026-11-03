@@ -2075,14 +2075,21 @@ video.project__img {
 }
 
 .social {
-  display: grid;
-  grid-template-columns: 160px 1fr auto;
-  align-items: baseline;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 24px;
-  padding: 32px 0;
+  padding: 28px 0;
   margin-bottom: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social__text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 }
 
 .social__label {
@@ -2092,9 +2099,9 @@ video.project__img {
 
 .social__handle {
   font-family: var(--font-display);
-  font-size: clamp(28px, 4.4vw, 56px);
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   transition: color 0.4s var(--ease-out);
 }
 
@@ -2102,54 +2109,30 @@ video.project__img {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
+  padding: 12px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 99px;
   font-size: 15px;
   color: var(--white);
+  transition: background-color 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
 }
 
 .social__cta svg {
   transition: transform 0.4s var(--ease-out);
 }
 
-.social:hover .social__handle,
-.social:hover .social__cta {
+.social:hover .social__handle {
   color: var(--purple);
 }
 
+.social:hover .social__cta {
+  background: var(--purple);
+  border-color: var(--purple);
+}
+
 .social:hover .social__cta svg {
-  transform: translate(3px, -3px);
-}
-
-/* Giant brand wordmark */
-.brand {
-  margin: 56px 0 8px;
-  text-align: center;
-  overflow: hidden;
-  user-select: none;
-}
-
-.brand__word {
-  display: block;
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: min(11.4vw, 180px);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  white-space: nowrap;
-  background: linear-gradient(180deg, #ffffff 15%, rgba(255, 255, 255, 0.04) 98%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-.brand__logo {
-  display: inline-block;
-  width: auto;
-  height: 0.74em;
-  margin-right: 0.06em;
-  vertical-align: -0.02em;
-  -webkit-mask-image: linear-gradient(180deg, #000 20%, rgba(0, 0, 0, 0.18) 100%);
-  mask-image: linear-gradient(180deg, #000 20%, rgba(0, 0, 0, 0.18) 100%);
+  transform: translate(2px, -2px);
 }
 
 .copyright {
@@ -2576,17 +2559,11 @@ video.project__img {
   }
 
   .social {
-    grid-template-columns: 1fr auto;
-    row-gap: 8px;
-    padding: 24px 0;
+    padding: 22px 0;
   }
 
-  .social__label {
-    grid-column: 1 / -1;
-  }
-
-  .brand {
-    margin-top: 36px;
+  .social__cta {
+    padding: 10px 16px;
   }
 
   .info__menus {
