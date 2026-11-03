@@ -2075,82 +2075,48 @@ video.project__img {
 }
 
 .social {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 22px 30px;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: var(--white-05);
-  margin-bottom: 10px;
-  transition: background-color 0.4s, border-color 0.4s;
-}
-
-.social:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.social__icon {
   display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
+  grid-template-columns: 160px 1fr auto;
+  align-items: baseline;
+  gap: 24px;
+  padding: 32px 0;
+  margin-bottom: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.social__icon img {
-  width: 22px;
-  height: 22px;
-}
-
-.social__text {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-
-.social__text .info__title {
-  margin: 0;
+.social__label {
+  font-size: 14px;
   color: var(--pill);
 }
 
 .social__handle {
   font-family: var(--font-display);
-  font-size: clamp(20px, 2.4vw, 30px);
-  line-height: 1.1;
-  letter-spacing: -1px;
+  font-size: clamp(28px, 4.4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  transition: color 0.4s var(--ease-out);
 }
 
-.social__go {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  margin-left: auto;
-  border-radius: 50%;
-  background: #f5f5f5;
-  color: var(--ink);
-  overflow: hidden;
-  transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out);
-}
-
-.social__go svg {
-  transition: transform 0.5s var(--ease-out);
-}
-
-.social:hover .social__go {
-  background: var(--purple);
+.social__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
   color: var(--white);
 }
 
-.social:hover .social__go svg {
-  transform: translate(2px, -2px);
+.social__cta svg {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.social:hover .social__handle,
+.social:hover .social__cta {
+  color: var(--purple);
+}
+
+.social:hover .social__cta svg {
+  transform: translate(3px, -3px);
 }
 
 /* Giant brand wordmark */
@@ -2610,18 +2576,13 @@ video.project__img {
   }
 
   .social {
-    padding: 18px 20px;
-    gap: 14px;
+    grid-template-columns: 1fr auto;
+    row-gap: 8px;
+    padding: 24px 0;
   }
 
-  .social__icon {
-    width: 48px;
-    height: 48px;
-  }
-
-  .social__go {
-    width: 40px;
-    height: 40px;
+  .social__label {
+    grid-column: 1 / -1;
   }
 
   .brand {
