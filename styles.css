@@ -1030,6 +1030,21 @@ body.menu-open {
   transform: translateY(-2px);
 }
 
+/* Seta desenhada no mesmo traço e altura das maiúsculas do Unbounded */
+.svc__hud-btn {
+  gap: 8px;
+}
+
+.svc__hud-arrow {
+  flex-shrink: 0;
+  margin-top: -1px;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.svc__hud-btn:hover .svc__hud-arrow {
+  transform: translate(1.5px, -1.5px);
+}
+
 /* ---------- Service details modal ---------- */
 .drawer {
   position: fixed;

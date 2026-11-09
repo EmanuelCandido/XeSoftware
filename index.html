@@ -204,7 +204,7 @@
               <button class="svc__zoom-hit" type="button" data-zoom-current aria-label="Ampliar imagem"></button>
               <div class="svc__hud">
                 <span class="svc__zoom-hint" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/></svg>Clique para ampliar</span>
-                <button class="svc__hud-btn" type="button" data-details-current>Ver detalhes <span aria-hidden="true">↗</span></button>
+                <button class="svc__hud-btn" type="button" data-details-current>Ver detalhes <svg class="svc__hud-arrow" width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true"><path d="M1.2 7.8 7.6 1.4M2.4 1.2h5.4v5.4"/></svg></button>
               </div>
             </div>
           </div>
@@ -232,11 +232,20 @@
               </div>
             </article>
             <article class="project" data-reveal>
-              <div class="project__media"><video class="project__img" data-preview muted loop playsinline preload="none" data-poster="assets/video/projects/eco.webp?v=2" aria-label="Prévia animada do jogo Eco City"><source data-src="assets/video/projects/eco-sm.webm?v=2" media="(max-width: 700px)" type="video/webm; codecs=av01.0.05M.08" /><source data-src="assets/video/projects/eco-sm.mp4?v=2" media="(max-width: 700px)" type="video/mp4" /><source data-src="assets/video/projects/eco.webm?v=2" type="video/webm; codecs=av01.0.05M.08" /><source data-src="assets/video/projects/eco.mp4?v=2" type="video/mp4" /></video></div>
+              <div class="project__media"><video class="project__img" data-preview muted loop playsinline preload="none" data-poster="assets/video/projects/eco.webp?v=3" aria-label="Prévia animada do jogo Eco City"><source data-src="assets/video/projects/eco-sm.webm?v=3" media="(max-width: 700px)" type="video/webm; codecs=av01.0.05M.08" /><source data-src="assets/video/projects/eco-sm.mp4?v=3" media="(max-width: 700px)" type="video/mp4" /><source data-src="assets/video/projects/eco.webm?v=3" type="video/webm; codecs=av01.0.05M.08" /><source data-src="assets/video/projects/eco.mp4?v=3" type="video/mp4" /></video></div>
               <div class="project__info">
                 <span class="tag">Jogo</span>
                 <h3 class="h3">Eco City</h3>
                 <p class="project__text">O jogo foi desenvolvido para ensinar sustentabilidade de forma interativa, incentivando crianças a tomar decisões e compreender o impacto de suas escolhas no ambiente.</p>
+                <span class="more more--mobile">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+              </div>
+            </article>
+            <article class="project" data-reveal>
+              <div class="project__media"><video class="project__img" data-preview muted loop playsinline preload="none" data-poster="assets/video/projects/noma.webp?v=1" aria-label="Prévia animada da loja NOMA: vitrine, carrinho, filtros e busca"><source data-src="assets/video/projects/noma-sm.webm?v=1" media="(max-width: 700px)" type="video/webm; codecs=av01.0.05M.08" /><source data-src="assets/video/projects/noma-sm.mp4?v=1" media="(max-width: 700px)" type="video/mp4" /><source data-src="assets/video/projects/noma.webm?v=1" type="video/webm; codecs=av01.0.05M.08" /><source data-src="assets/video/projects/noma.mp4?v=1" type="video/mp4" /></video></div>
+              <div class="project__info">
+                <span class="tag">E-commerce</span>
+                <h3 class="h3">NOMA - Loja de Roupas</h3>
+                <p class="project__text">Loja de roupas e acessórios com vitrine, filtros sem recarregar a página, busca ao vivo e carrinho que fecha o pedido pelo WhatsApp, usando MongoDB, Redis e Supabase.</p>
                 <span class="more more--mobile">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
               </div>
             </article>
@@ -248,6 +257,15 @@
                 <span class="tag">Sistema</span>
                 <h3 class="h3">Agendamento de Barbearia</h3>
                 <p class="project__text">O sistema foi desenvolvido para facilitar o agendamento de serviços da barbearia, permitindo que clientes escolham o serviço, profissional e horário de forma rápida e prática.</p>
+                <span class="more more--mobile">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
+              </div>
+            </article>
+            <article class="project" data-reveal>
+              <div class="project__media"><video class="project__img" data-preview muted loop playsinline preload="none" data-poster="assets/video/projects/essenza.webp?v=1" aria-label="Prévia animada do site do Essenza Studio de Pilates"><source data-src="assets/video/projects/essenza-sm.webm?v=1" media="(max-width: 700px)" type="video/webm; codecs=av01.0.05M.08" /><source data-src="assets/video/projects/essenza-sm.mp4?v=1" media="(max-width: 700px)" type="video/mp4" /><source data-src="assets/video/projects/essenza.webm?v=1" type="video/webm; codecs=av01.0.05M.08" /><source data-src="assets/video/projects/essenza.mp4?v=1" type="video/mp4" /></video></div>
+              <div class="project__info">
+                <span class="tag">Website</span>
+                <h3 class="h3">Essenza Studio de Pilates</h3>
+                <p class="project__text">Site institucional para um studio de Pilates feminino em Teresina, com aulas para cada fase da vida, planos e agendamento que já abre o WhatsApp com a mensagem pronta.</p>
                 <span class="more more--mobile">Saiba mais <span class="more__circle"><img src="assets/icons/arrow-up-right.svg" alt="" width="8" height="8" /></span></span>
               </div>
             </article>
