@@ -239,35 +239,9 @@
         ["Nossa abordagem", "Começamos pelo problema, não pela tecnologia. Escolhemos a arquitetura mais simples que atende à necessidade real."],
       ],
     },
-    seo: {
-      num: "04",
-      title: "SEO & Performance",
-      lead: "Para quem já tem site, mas não aparece no Google — ou aparece atrás da concorrência.",
-      price: "Sob consulta",
-      time: "Plano mensal",
-      status: "Vagas abertas",
-      overview: [
-        "Otimizamos a estrutura, o conteúdo e as palavras-chave do seu site para alcançar posições mais altas nos resultados de busca e ser encontrado por clientes em potencial.",
-        "Também cuidamos da velocidade e da experiência da página: sites rápidos rankeiam melhor, convertem mais e passam mais confiança.",
-      ],
-      included: [
-        "Auditoria técnica completa do site",
-        "Pesquisa de palavras-chave do seu mercado",
-        "Otimização on-page de títulos, textos e estrutura",
-        "Melhoria de Core Web Vitals e velocidade",
-        "Configuração do Google Search Console",
-        "Otimização do Perfil da Empresa no Google",
-        "Relatório mensal de posições e tráfego",
-      ],
-      steps: [
-        ["Diagnóstico", "Analisamos seu site, sua concorrência e as buscas que seus clientes fazem para definir onde estão as maiores oportunidades."],
-        ["Execução", "Aplicamos as correções técnicas e de conteúdo por ordem de impacto e acompanhamos a evolução das posições mês a mês."],
-        ["Nossa abordagem", "Nada de truques: SEO consistente, baseado em conteúdo útil e em um site tecnicamente impecável, para resultados que se sustentam."],
-      ],
-    },
   };
   const SERVICE_IDS = Object.keys(SERVICES);
-  const IMG_V = "15"; // keep in sync with the ?v= used in index.html (same URL = cached once)
+  const IMG_V = "16"; // keep in sync with the ?v= used in index.html (same URL = cached once)
   const serviceImg = (id, size = "") => `assets/img/services/${id}${size}.webp?v=${IMG_V}`;
   let openLightbox = () => {};
 
@@ -476,7 +450,7 @@
       if (cta) {
         e.preventDefault();
         const field = document.querySelector('#contact-form select[name="tipo"]');
-        const TIPO = { websites: "Landing Page", ecommerce: "Sites/E-commerce", sistemas: "Sistema sob medida", seo: "SEO & Performance" };
+        const TIPO = { websites: "Landing Page", ecommerce: "Sites/E-commerce", sistemas: "Sistema sob medida" };
         if (field) {
           field.value = TIPO[cta.dataset.cta];
           field.closest(".field").classList.remove("is-invalid");
